@@ -1,0 +1,964 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Antigravity Briefing</title>
+    
+    <!-- PWA Settings -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#0A192F">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    
+    <!-- iOS / Apple settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Antigravity">
+    <link rel="apple-touch-icon" href="/icon.svg">
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Ultra Premium Violet & Obsidian Dark Theme */
+            --bg-grad-start: #080B11;
+            --bg-grad-end: #121824;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --violet-pop: #7C3AED;
+            --violet-hover: #8B5CF6;
+            --violet-glow: rgba(124, 58, 237, 0.25);
+            --font-family: 'Plus Jakarta Sans', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--bg-grad-start), var(--bg-grad-end)) fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: -0.2px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+        #app-container {
+            width: 100%; max-width: 500px;
+            padding: 24px 20px 100px 20px;
+            box-sizing: border-box;
+            display: none;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Header & Date Badge */
+        .header-wrapper { text-align: center; margin-bottom: 24px; }
+        .date-badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.12);
+            color: #C084FC;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .briefing-card {
+            border-left: 4px solid var(--violet-pop);
+            background: linear-gradient(90deg, rgba(124, 58, 237, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+        }
+
+        .briefing-text {
+            font-size: 1rem; line-height: 1.6; font-weight: 500; color: #E5E7EB; margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .section-title {
+            font-size: 1.2rem; font-weight: 700; color: var(--text-main);
+            margin-top: 0; margin-bottom: 18px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        /* Todo Items */
+        .todo-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 18px; margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .todo-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Checkbox */
+        .checkbox-wrapper {
+            display: flex; align-items: center; flex-grow: 1; cursor: pointer;
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            display: none;
+        }
+        .custom-check {
+            width: 22px; height: 22px;
+            border: 2px solid #4B5563;
+            border-radius: 7px;
+            margin-right: 14px;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-check {
+            background: var(--violet-pop); border-color: var(--violet-pop);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--violet-glow);
+        }
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-check::after {
+            content: '✓'; color: white; font-weight: 800; font-size: 13px;
+        }
+        .todo-text {
+            font-size: 0.95rem; color: var(--text-main); font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); line-height: 1.4;
+        }
+        .checkbox-wrapper input[type="checkbox"]:checked ~ .todo-text {
+            text-decoration: line-through; color: var(--text-muted); opacity: 0.6;
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.08);
+            border: none; border-radius: 12px;
+            color: #F87171;
+            width: 38px; height: 38px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-size: 1.1rem;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); margin-left: 12px; flex-shrink: 0;
+        }
+        .delete-btn:hover { 
+            background: #EF4444; color: white; 
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Floating Input Bar Container */
+        .bottom-bar-container {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 480px; z-index: 100;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+        .rule-toggle-wrapper {
+            margin-bottom: 8px; margin-right: 12px;
+            background: rgba(8, 11, 17, 0.8); backdrop-filter: blur(10px);
+            padding: 5px 14px; border-radius: 12px; border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .rule-toggle-wrapper label {
+            color: var(--text-muted); font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; letter-spacing: 0.5px;
+        }
+        .rule-toggle-wrapper input {
+            margin-right: 6px; cursor: pointer; accent-color: var(--violet-pop);
+        }
+        .bottom-bar-inner {
+            width: 100%; box-sizing: border-box;
+            background: rgba(18, 24, 36, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            display: flex; align-items: center; padding: 6px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+            transition: border-color 0.3s;
+        }
+        .bottom-bar-inner:focus-within {
+            border-color: rgba(124, 58, 237, 0.4);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.5), 0 0 15px rgba(124, 58, 237, 0.15);
+        }
+        .bottom-bar-inner input {
+            flex-grow: 1; background: transparent; border: none;
+            padding: 12px 10px 12px 20px; font-size: 0.95rem; color: var(--text-main);
+            outline: none; font-family: var(--font-family); min-width: 0;
+            font-weight: 500;
+        }
+        .bottom-bar-inner input::placeholder { color: #6B7280; }
+        .bottom-bar-inner button {
+            background: var(--violet-pop); color: white;
+            border: none; border-radius: 24px;
+            padding: 12px 22px; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .bottom-bar-inner button:hover { 
+            background: var(--violet-hover); 
+            transform: translateY(-1px); 
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
+        }
+
+        /* Fullscreen Loading Overlay */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-grad-start);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 999; color: var(--text-main); transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 42px; height: 42px; border: 4px solid rgba(255, 255, 255, 0.05);
+            border-top-color: var(--violet-pop); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .anim-leave { animation: fadeOutLeft 0.4s forwards; }
+        @keyframes fadeOutLeft { to { opacity: 0; transform: translateX(30px); } }
+
+        /* Floating Capsule Navigation Tabs */
+        .tabs-nav {
+            display: flex; width: calc(100% - 40px); max-width: 460px; margin-top: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 4px;
+            justify-content: space-between; align-items: center; z-index: 10;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        .tab-btn {
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 10px 16px; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 16px;
+            font-family: var(--font-family); flex-grow: 1; text-align: center;
+            display: flex; justify-content: center; align-items: center; gap: 6px;
+        }
+        .tab-btn.active {
+            color: #FFFFFF;
+            background: var(--violet-pop);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        .pw-change-btn {
+            background: transparent; border: none; color: #9CA3AF;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            padding: 10px 14px; font-family: var(--font-family);
+            flex-grow: 0; white-space: nowrap; border-radius: 16px;
+            transition: all 0.2s;
+        }
+        .pw-change-btn:hover { color: #F3F4F6; background: rgba(255,255,255,0.05); }
+
+        /* Chat Container styling */
+        #chat-container {
+            width: 100%; max-width: 500px;
+            padding: 20px 20px 100px 20px;
+            box-sizing: border-box;
+            display: flex; flex-direction: column;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .chat-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; padding: 0 4px;
+        }
+        .chat-header h3 { margin: 0; font-size: 1.15rem; font-weight: 700; }
+        .status-badge {
+            background: rgba(16, 185, 129, 0.12); color: #34D399;
+            font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        .clear-chat-btn {
+            background: rgba(239, 68, 68, 0.1); color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 12px;
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font-family);
+        }
+        .clear-chat-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+        }
+        #chat-messages {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 18px; height: calc(100vh - 280px);
+            overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
+            box-shadow: inset 0 4px 20px rgba(0,0,0,0.3);
+            -webkit-overflow-scrolling: touch;
+        }
+        .chat-bubble {
+            max-width: 80%; padding: 12px 18px;
+            font-size: 0.95rem; line-height: 1.5; word-break: keep-all;
+            animation: bubbleFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            font-weight: 500;
+        }
+        @keyframes bubbleFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .chat-bubble.user {
+            background: linear-gradient(135deg, var(--violet-pop), #5B21B6); color: white;
+            align-self: flex-end; 
+            border-radius: 20px 20px 4px 20px;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
+        }
+        .chat-bubble.ai {
+            background: rgba(255, 255, 255, 0.04); color: var(--text-main);
+            align-self: flex-start; 
+            border-radius: 20px 20px 20px 4px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        /* Typing Dots Animation */
+        .typing-dots { display: flex; gap: 5px; padding: 6px 4px; }
+        .typing-dots span {
+            width: 7px; height: 7px; background: var(--text-muted);
+            border-radius: 50%; animation: type 1.2s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes type { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    </style>
+</head>
+<body>
+
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div style="font-weight: 600; letter-spacing: 1px;">Antigravity 🚀</div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav" id="tabs-nav" style="display:none;">
+        <button class="tab-btn active" onclick="switchTab('schedule')">📋 스케줄</button>
+        <button class="tab-btn" onclick="switchTab('chat')">💬 AI 비서</button>
+        <button class="pw-change-btn" onclick="promptPasswordChange()">🔒 비번 변경</button>
+    </div>
+
+    <div id="app-container">
+        <div class="header-wrapper">
+            <div class="date-badge" id="date-display">불러오는 중...</div>
+        </div>
+
+        <div class="glass-card briefing-card">
+            <p class="briefing-text" id="briefing-display">PC와 안전하게 연결하여 데이터를 가져오고 있습니다...</p>
+        </div>
+
+        <div class="glass-card">
+            <h3 class="section-title">✨ 오늘의 할 일</h3>
+            <div id="todo-list">
+                <!-- Todo items will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Panel (NEW) -->
+    <div id="chat-container" style="display:none;">
+        <div class="chat-header">
+            <h3>💬 Antigravity AI 비서</h3>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="clear-chat-btn" onclick="clearChatHistory()">🗑️ 새 대화</button>
+                <span class="status-badge">실시간</span>
+            </div>
+        </div>
+        <div id="chat-messages">
+            <!-- Chat history will be loaded here -->
+        </div>
+    </div>
+
+    <div class="bottom-bar-container" id="bottom-bar" style="display:none;">
+        <div class="rule-toggle-wrapper">
+            <label>
+                <input type="checkbox" id="rule-checkbox"> ★ 규칙/기억으로 저장
+            </label>
+        </div>
+        <div class="bottom-bar-inner">
+            <input type="text" id="new-task-input" placeholder="새로운 할 일 떠오르셨나요?">
+            <button id="send-btn" onclick="handleSend()">추가</button>
+        </div>
+    </div>
+
+    <script>
+        const SESSION_TOKEN_KEY = 'ag_session_token';
+        const OFFLINE_HASH_KEY = 'ag_offline_password_hash';
+        let activeTab = 'schedule';
+        let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
+        let offlineMode = false;
+        const APP_BUILD_ID = '20260703-github-pages-offline-shell';
+        const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
+        function apiUrl(path) { return API_BASE + path; }
+
+        async function repairPwaCache() {
+            try {
+                if ('caches' in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys.map(key => caches.delete(key)));
+                }
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(registrations.map(reg => reg.update().catch(() => null)));
+                }
+            } catch (e) {
+                console.log('PWA cache repair skipped', e);
+            }
+        }
+
+        function authHeaders(extraHeaders = {}) {
+            return { ...extraHeaders, 'X-AG-Session': apiSessionToken };
+        }
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function loginWithPassword(password) {
+            try {
+                const response = await fetch(apiUrl('/api/login'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                if (response.status >= 500) {
+                    return 'offline';
+                }
+                if (response.status !== 200) {
+                    return 'invalid';
+                }
+                const data = await response.json();
+                apiSessionToken = data.session || '';
+                if (!apiSessionToken) {
+                    return 'invalid';
+                }
+                sessionStorage.setItem(SESSION_TOKEN_KEY, apiSessionToken);
+                localStorage.setItem(OFFLINE_HASH_KEY, await sha256(password));
+                localStorage.setItem('ag_offline_unlock_ready', 'true');
+                offlineMode = false;
+                return 'online';
+            } catch (e) {
+                return 'offline';
+            }
+        }
+        async function handle403() {
+            sessionStorage.removeItem(SESSION_TOKEN_KEY);
+            apiSessionToken = '';
+            
+            const pw = prompt("로그인 세션이 만료되었습니다. 다시 비밀번호를 입력해주세요.");
+            if (pw) {
+                const status = await loginWithPassword(pw);
+                if (status === 'online') {
+                    return true;
+                } else {
+                    alert("비밀번호 인증 실패.");
+                }
+            }
+            return false;
+        }
+
+        async function canUnlockOffline(password) {
+            const savedHash = localStorage.getItem(OFFLINE_HASH_KEY);
+            if (!savedHash) return false;
+            return await sha256(password) === savedHash;
+        }
+
+        window.onload = async () => {
+            await repairPwaCache();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js?build=' + APP_BUILD_ID).catch(err => console.log('SW setup failed', err));
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    window.location.reload();
+                });
+            }
+
+            let loggedIn = false;
+            if (apiSessionToken) {
+                loggedIn = true;
+            }
+
+            if (!loggedIn) {
+                const input = prompt("보안 비밀번호를 입력하세요");
+                if (input) {
+                    const loginStatus = await loginWithPassword(input);
+                    loggedIn = loginStatus === 'online' || (loginStatus === 'offline' && await canUnlockOffline(input));
+                    offlineMode = loginStatus === 'offline' && loggedIn;
+                }
+            }
+
+            if (loggedIn) {
+                fetchData();
+                loadChatFromLocal();
+            } else {
+                alert("인증 실패 또는 첫 오프라인 실행입니다.");
+                document.getElementById('loading-overlay').innerHTML = "<h2>인증 실패</h2><p>PC가 꺼져 있을 때는 이전에 이 기기에서 한 번 로그인한 기록이 있어야 합니다.</p>";
+            }
+        };
+
+        async function promptPasswordChange() {
+            const inputCurrent = prompt("현재 비밀번호를 입력해 주세요.");
+            if (!inputCurrent) return;
+
+            const currentStatus = await loginWithPassword(inputCurrent);
+            if (currentStatus !== 'online') {
+                alert(currentStatus === 'offline' ? "PC가 꺼져 있어 비밀번호를 변경할 수 없습니다." : "현재 비밀번호가 일치하지 않습니다.");
+                return;
+            }
+
+            const newPw = prompt("새 비밀번호를 입력해 주세요.");
+            if (!newPw) return;
+
+            if (newPw.length < 4) {
+                alert("비밀번호는 최소 4자리 이상이어야 합니다.");
+                return;
+            }
+
+            const confirmPw = prompt("새 비밀번호를 다시 한 번 입력해 주세요.");
+            if (newPw !== confirmPw) {
+                alert("새 비밀번호가 서로 일치하지 않습니다.");
+                return;
+            }
+
+            const newHash = await sha256(newPw);
+
+            try {
+                const response = await fetch(apiUrl('/api/change-password'), {
+                    method: 'POST',
+                    headers: authHeaders(),
+                    body: newHash
+                });
+
+                if (response.status === 200) {
+                    await loginWithPassword(newPw);
+                    localStorage.setItem(OFFLINE_HASH_KEY, newHash);
+                    alert("비밀번호가 변경되었습니다.");
+                } else {
+                    alert("비밀번호 변경 실패: " + response.status);
+                }
+            } catch (e) {
+                alert("네트워크 오류로 비밀번호 변경 실패: " + e);
+            }
+        }
+
+        async function fetchData() {
+            let sevenDaysData = null;
+            let currentOnline = false;
+            try {
+                const res = await fetch(apiUrl('/todo.json') + '?t=' + Date.now(), {
+                    headers: authHeaders()
+                });
+                if (res.status === 200) {
+                    sevenDaysData = await res.json();
+                    localStorage.setItem('ag_7day_data', JSON.stringify(sevenDaysData));
+                    offlineMode = false;
+                    currentOnline = true;
+                } else if (res.status === 403) {
+                    const success = await handle403();
+                    if (success) {
+                        return fetchData();
+                    }
+                } else {
+                    offlineMode = true;
+                }
+            } catch(e) {
+                console.log("Network fetch failed, falling back to cache.", e);
+                offlineMode = true;
+            }
+            
+            if(!sevenDaysData) {
+                const cached = localStorage.getItem('ag_7day_data');
+                if(cached) sevenDaysData = JSON.parse(cached);
+            }
+            
+            try {
+                if(sevenDaysData) {
+                    const d = new Date();
+                    const todayStr = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0');
+                    let latestData = sevenDaysData[todayStr];
+                    
+                    if(latestData) {
+                        document.getElementById('date-display').innerText = latestData.date;
+                        
+                        if (offlineMode) {
+                            document.getElementById('briefing-display').innerHTML = `
+                                <div style="color:#ffb74d; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                                    <span>⚠️ 오프라인 모드입니다. 마지막으로 저장된 할 일을 보여줍니다.</span>
+                                </div>
+                                <div style="color:var(--text-muted); font-size:0.9em; margin-bottom:12px;">PC가 켜지면 변경사항이 자동 동기화됩니다.</div>
+                                ${latestData.briefing}
+                            `;
+                        } else {
+                            document.getElementById('briefing-display').innerText = latestData.briefing;
+                        }
+                    
+                        const list = document.getElementById('todo-list');
+                        list.innerHTML = '';
+                        
+                        // Merge local queue changes
+                        let todos = [...latestData.todos];
+                        let queue = JSON.parse(localStorage.getItem('ag_outbox_queue') || '[]');
+                        let localAdds = queue.filter(item => item.type === 'add');
+                        let localDeletes = queue.filter(item => item.type === 'delete').map(item => item.text);
+                        
+                        // Apply deletions
+                        todos = todos.filter(t => !localDeletes.includes(t));
+                        // Apply additions
+                        localAdds.forEach(item => {
+                            if (!todos.includes(item.text)) {
+                                todos.push(item.text);
+                            }
+                        });
+                    
+                        if(todos.length === 0) {
+                            list.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--text-muted);">🎉 오늘 할 일을 모두 완료했습니다!</div>`;
+                        } else {
+                            const todayKey = new Date().toDateString();
+                            todos.forEach((t, index) => {
+                                const safeText = t.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                                const isChecked = localStorage.getItem('ag_check_' + todayKey + '_' + t) === 'true' ? 'checked' : '';
+                                
+                                const isPending = queue.some(item => item.type === 'add' && item.text === t);
+                                const pendingClass = isPending ? 'style="opacity:0.75;"' : '';
+                                const pendingTag = isPending ? ' <span style="font-size:0.8em; color:#ffb74d;">(저장 대기 중)</span>' : '';
+                                
+                                list.innerHTML += `
+                                <div class="todo-item" id="item-${index}" ${pendingClass}>
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" onchange="toggleCheck(this, '${safeText}')" ${isChecked}>
+                                        <div class="custom-check"></div>
+                                        <span class="todo-text">${t}${pendingTag}</span>
+                                    </label>
+                                    <button class="delete-btn" onclick="deleteTask('${safeText}', ${index})" title="영구 삭제">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+                                    </button>
+                                </div>`;
+                            });
+                        }
+                    } else {
+                        document.getElementById('briefing-display').innerText = "오늘 날짜의 브리핑 데이터가 없습니다. PC를 한 번 켜서 데이터를 갱신해주세요!";
+                    }
+                } else {
+                    document.getElementById('briefing-display').innerText = "저장된 할 일 데이터가 없습니다. PC가 켜진 상태에서 한 번 앱을 열어 데이터를 받아와야 오프라인 사용이 가능합니다.";
+                }
+            } catch(e) {
+                document.getElementById('briefing-display').innerText = "데이터 처리 중 오류가 발생했습니다: " + e.message;
+            } finally {
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    document.getElementById('tabs-nav').style.display = 'flex';
+                    document.getElementById('app-container').style.display = 'block';
+                    document.getElementById('bottom-bar').style.display = 'flex';
+                }, 500);
+            }
+            
+            if (currentOnline) {
+                flushQueue();
+            }
+        }
+
+        // Tab Switch Logic
+        function switchTab(tab) {
+            activeTab = tab;
+            const schedView = document.getElementById('app-container');
+            const chatView = document.getElementById('chat-container');
+            const schedBtn = document.querySelectorAll('.tab-btn')[0];
+            const chatBtn = document.querySelectorAll('.tab-btn')[1];
+            const input = document.getElementById('new-task-input');
+            const ruleCheckbox = document.querySelector('.rule-toggle-wrapper');
+            const sendBtn = document.getElementById('send-btn');
+            
+            if(tab === 'schedule') {
+                schedView.style.display = 'block';
+                chatView.style.display = 'none';
+                schedBtn.classList.add('active');
+                chatBtn.classList.remove('active');
+                input.placeholder = "새로운 할 일 떠오르셨나요?";
+                ruleCheckbox.style.display = 'block';
+                sendBtn.innerText = "추가";
+            } else {
+                schedView.style.display = 'none';
+                chatView.style.display = 'flex';
+                schedBtn.classList.remove('active');
+                chatBtn.classList.add('active');
+                input.placeholder = "비서에게 무엇이든 물어보세요...";
+                ruleCheckbox.style.display = 'block';
+                sendBtn.innerText = "전송";
+                scrollToBottom();
+            }
+        }
+
+        // --- Chat Logic ---
+        function loadChatFromLocal() {
+            const history = JSON.parse(localStorage.getItem('ag_chat_history') || '[]');
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = '';
+            history.forEach(msg => {
+                renderChatBubble(msg.role, msg.content);
+            });
+            
+            // Append a hidden typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.id = "typing-indicator";
+            typingDiv.className = "chat-bubble ai";
+            typingDiv.style.display = "none";
+            typingDiv.innerHTML = `
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>`;
+            container.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        function appendChatBubble(role, content) {
+            const history = JSON.parse(localStorage.getItem('ag_chat_history') || '[]');
+            history.push({role: role, content: content});
+            localStorage.setItem('ag_chat_history', JSON.stringify(history));
+            renderChatBubble(role, content);
+            scrollToBottom();
+        }
+
+        async function clearChatHistory() {
+            if (!confirm("대화 기록을 모두 지우고 새 대화를 시작하시겠습니까?")) return;
+            
+            try {
+                await fetch(apiUrl('/api/clear-chat'), {
+                    method: 'POST',
+                    headers: authHeaders()
+                });
+            } catch (e) {
+                console.error("Failed to clear chat on PC", e);
+            }
+            
+            localStorage.setItem('ag_chat_history', '[]');
+            loadChatFromLocal();
+        }
+
+        function renderChatBubble(role, content) {
+            const container = document.getElementById('chat-messages');
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${role}`;
+            bubble.innerText = content;
+            
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) {
+                container.insertBefore(bubble, indicator);
+            } else {
+                container.appendChild(bubble);
+            }
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function sendChatMessage(savedText = null) {
+            const input = document.getElementById('new-task-input');
+            const ruleCheckbox = document.getElementById('rule-checkbox');
+            let text = savedText || input.value.trim();
+            if(!text) return;
+            
+            let payloadText = text;
+            if (!savedText && ruleCheckbox.checked) {
+                payloadText = "#규칙 " + text;
+                ruleCheckbox.checked = false; // 보낸 후 체크박스 해제
+            }
+            
+            if (!savedText) {
+                appendChatBubble("user", payloadText);
+                input.value = '';
+            }
+            
+            document.getElementById('typing-indicator').style.display = 'block';
+            scrollToBottom();
+            
+            try {
+                const response = await fetch(apiUrl('/api/chat'), {
+                    method: 'POST',
+                    headers: authHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ message: payloadText })
+                });
+                
+                if (response.status === 200) {
+                    const data = await response.json();
+                    document.getElementById('typing-indicator').style.display = 'none';
+                    appendChatBubble("ai", data.reply);
+                } else if (response.status === 403) {
+                    const success = await handle403();
+                    if (success) {
+                        return sendChatMessage(payloadText);
+                    }
+                } else {
+                    const errorText = await response.text();
+                    throw new Error("Server error: " + response.status + " " + errorText);
+                }
+            } catch(e) {
+                document.getElementById('typing-indicator').style.display = 'none';
+                appendChatBubble("ai", "PC가 꺼져 있어 AI 비서는 지금 사용할 수 없습니다.\n오늘 할 일은 오프라인으로 계속 사용할 수 있습니다.");
+            }
+        }
+
+        function handleSend() {
+            if (activeTab === 'schedule') {
+                sendTask();
+            } else {
+                sendChatMessage();
+            }
+        }
+
+        // 스마트폰 로컬 저장소에 오늘 날짜 기준으로 체크박스 상태 저장
+        function toggleCheck(checkbox, taskText) {
+            const todayKey = new Date().toDateString();
+            localStorage.setItem('ag_check_' + todayKey + '_' + taskText, checkbox.checked);
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('ag_check_') && !key.includes(todayKey)) {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+
+        async function deleteTask(taskText, index) {
+            if(confirm("이 항목을 영구적으로 삭제할까요? (PC에서도 지워집니다)")) {
+                let queue = JSON.parse(localStorage.getItem('ag_outbox_queue') || '[]');
+                
+                // Optimistically remove pending add of the same task from local queue if it exists
+                const pendingAdd = queue.find(x => x.type === 'add' && x.text === taskText);
+                if (pendingAdd) {
+                    queue = queue.filter(x => x.id !== pendingAdd.id);
+                } else {
+                    const localId = 'local-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                    queue.push({
+                        id: localId,
+                        type: 'delete',
+                        text: taskText,
+                        created_at: new Date().toISOString()
+                    });
+                }
+                localStorage.setItem('ag_outbox_queue', JSON.stringify(queue));
+                
+                fetchData();
+                flushQueue();
+            }
+        }
+
+        // 오프라인 전송 큐 (회원님의 완벽한 아이디어 적용!)
+        async function flushQueue() {
+            let queue = JSON.parse(localStorage.getItem('ag_outbox_queue') || '[]');
+            if (queue.length === 0) return;
+
+            try {
+                if (!apiSessionToken) {
+                    return;
+                }
+                
+                // Check if server is online using a cache-bypassed fetch to todo.json
+                const ping = await fetch(apiUrl('/todo.json') + '?t=' + Date.now(), { cache: 'no-store', headers: authHeaders() });
+                if (ping.status === 200) {
+                    let newQueue = [...queue];
+                    for (let task of queue) {
+                        let url = task.type === 'add' ? apiUrl('/api/todo') : apiUrl('/api/delete');
+                        const response = await fetch(url, { 
+                            method: 'POST', 
+                            headers: authHeaders(),
+                            body: task.text 
+                        });
+                        if (response.ok) {
+                            newQueue = newQueue.filter(item => item.id !== task.id);
+                            localStorage.setItem('ag_outbox_queue', JSON.stringify(newQueue));
+                        } else {
+                            console.error(`Sync failed for ${task.id}: ${response.status}`);
+                            break; // Stop loop to preserve order
+                        }
+                    }
+                    if (newQueue.length === 0) {
+                        console.log("밀린 할 일 동기화 완료!");
+                    }
+                    fetchData(); // Refresh UI with official server state
+                }
+            } catch (e) {
+                console.log("PC가 아직 꺼져있어 전송 대기 중입니다.");
+            }
+        }
+
+        // 앱 시작 시 밀린 큐 전송 시도
+        setTimeout(flushQueue, 2000);
+
+        async function sendTask() {
+            const input = document.getElementById('new-task-input');
+            const ruleCheckbox = document.getElementById('rule-checkbox');
+            let task = input.value.trim();
+            if(!task) return;
+            
+            if(ruleCheckbox.checked) {
+                task = "#규칙 " + task;
+            }
+            
+            let queue = JSON.parse(localStorage.getItem('ag_outbox_queue') || '[]');
+            const localId = 'local-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            queue.push({
+                id: localId,
+                type: 'add',
+                text: task,
+                created_at: new Date().toISOString()
+            });
+            localStorage.setItem('ag_outbox_queue', JSON.stringify(queue));
+            
+            input.value = '';
+            ruleCheckbox.checked = false; // 전송 후 체크 해제
+            input.placeholder = "임시 저장됨! (PC 연결 시 자동 전송) 🚀";
+            setTimeout(() => input.placeholder = "새로운 할 일 떠오르셨나요?", 3000);
+
+            fetchData();
+            flushQueue();
+        }
+
+        // 엔터키 입력 지원
+        document.getElementById('new-task-input').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                handleSend();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

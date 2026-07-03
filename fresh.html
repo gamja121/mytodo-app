@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>Antigravity AI 비서 테스트</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #080B11;
+      color: #F3F4F6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1 { font-size: 22px; margin: 0 0 14px; }
+    .status {
+      color: #34D399;
+      background: rgba(16,185,129,.12);
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    #log {
+      min-height: 55vh;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,.04);
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .me, .ai {
+      padding: 10px 12px;
+      border-radius: 14px;
+      margin: 10px 0;
+      line-height: 1.45;
+    }
+    .me { background: #6D28D9; margin-left: 32px; }
+    .ai { background: rgba(255,255,255,.08); margin-right: 32px; }
+    .bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+      background: #111827;
+      padding: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      background: #7C3AED;
+      color: white;
+      font-weight: 700;
+      padding: 0 18px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Antigravity AI 비서 테스트</h1>
+  <div class="status">캐시 우회 테스트 페이지</div>
+  <div id="log"></div>
+  <div class="bar">
+    <input id="msg" placeholder="세컨드브레인 목표가 뭐야" autocomplete="off">
+    <button onclick="send()">전송</button>
+  </div>
+  <script>
+    const log = document.getElementById('log');
+    const input = document.getElementById('msg');
+
+    function add(cls, text) {
+      const div = document.createElement('div');
+      div.className = cls;
+      div.textContent = text;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function send() {
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      add('me', text);
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+          body: JSON.stringify({ message: text })
+        });
+        const raw = await res.text();
+        if (!res.ok) {
+          add('ai', 'HTTP 오류 ' + res.status + '\n' + raw);
+          return;
+        }
+        const data = JSON.parse(raw);
+        add('ai', data.reply || raw);
+      } catch (e) {
+        add('ai', '전송 실패: ' + e.message);
+      }
+    }
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') send();
+    });
+  </script>
+</body>
+</html>
