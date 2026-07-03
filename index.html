@@ -417,7 +417,7 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260703-github-pages-offline-shell';
+        const APP_BUILD_ID = '20260703-github-ngrok-header-v2';
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 
@@ -437,7 +437,7 @@
         }
 
         function authHeaders(extraHeaders = {}) {
-            return { ...extraHeaders, 'X-AG-Session': apiSessionToken };
+            return { ...extraHeaders, 'X-AG-Session': apiSessionToken, 'ngrok-skip-browser-warning': 'true' };
         }
 
         async function sha256(message) {
@@ -451,7 +451,7 @@
             try {
                 const response = await fetch(apiUrl('/api/login'), {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
                     body: JSON.stringify({ password })
                 });
                 if (response.status >= 500) {
@@ -959,6 +959,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
