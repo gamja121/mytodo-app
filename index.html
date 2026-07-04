@@ -190,6 +190,7 @@
             background: rgba(8, 11, 17, 0.8); backdrop-filter: blur(10px);
             padding: 5px 14px; border-radius: 12px; border: 1px solid var(--glass-border);
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex; gap: 12px; align-items: center;
         }
         .rule-toggle-wrapper label {
             color: var(--text-muted); font-size: 0.8rem; font-weight: 700; cursor: pointer;
@@ -401,11 +402,14 @@
 
     <div class="bottom-bar-container" id="bottom-bar" style="display:none;">
         <div class="rule-toggle-wrapper">
-            <label title="사용자 정보/사실로 저장합니다">
+            <label id="memory-label" title="사용자 정보/사실로 저장합니다">
                 <input type="checkbox" id="memory-checkbox" onchange="syncSaveMode('memory')"> 📝 정보로 저장
             </label>
-            <label title="AI가 지켜야 할 행동 규칙으로 저장합니다">
+            <label id="rule-label" title="AI가 지켜야 할 행동 규칙으로 저장합니다">
                 <input type="checkbox" id="rule-checkbox" onchange="syncSaveMode('rule')"> ⚙️ 규칙으로 저장
+            </label>
+            <label id="web-search-label" title="실시간 웹 검색을 허용합니다" style="display:none; color: #60A5FA;">
+                <input type="checkbox" id="web-search-checkbox"> 🌐 웹 검색 활성화
             </label>
         </div>
         <div class="bottom-bar-inner">
@@ -712,7 +716,10 @@
                 schedBtn.classList.add('active');
                 chatBtn.classList.remove('active');
                 input.placeholder = "새로운 할 일 떠오르셨나요?";
-                ruleCheckbox.style.display = 'block';
+                ruleCheckbox.style.display = 'flex';
+                document.getElementById('memory-label').style.display = 'flex';
+                document.getElementById('rule-label').style.display = 'flex';
+                document.getElementById('web-search-label').style.display = 'none';
                 sendBtn.innerText = "추가";
             } else {
                 schedView.style.display = 'none';
@@ -720,7 +727,10 @@
                 schedBtn.classList.remove('active');
                 chatBtn.classList.add('active');
                 input.placeholder = "비서에게 무엇이든 물어보세요...";
-                ruleCheckbox.style.display = 'block';
+                ruleCheckbox.style.display = 'flex';
+                document.getElementById('memory-label').style.display = 'flex';
+                document.getElementById('rule-label').style.display = 'flex';
+                document.getElementById('web-search-label').style.display = 'flex';
                 sendBtn.innerText = "전송";
                 scrollToBottom();
             }
@@ -830,11 +840,14 @@
             document.getElementById('typing-indicator').style.display = 'block';
             scrollToBottom();
             
+            const webSearchCheckbox = document.getElementById('web-search-checkbox');
+            const allowWebSearch = webSearchCheckbox ? webSearchCheckbox.checked : false;
+
             try {
                 const response = await fetch(apiUrl('/api/chat'), {
                     method: 'POST',
                     headers: authHeaders({ 'Content-Type': 'application/json' }),
-                    body: JSON.stringify({ message: payloadText })
+                    body: JSON.stringify({ message: payloadText, allow_web_search: allowWebSearch })
                 });
                 
                 if (response.status === 200) {
