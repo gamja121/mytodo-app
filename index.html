@@ -20,6 +20,9 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="/novel.css">
+    <script src="/novel.js" defer></script>
+
     <style>
         :root {
             /* Ultra Premium Violet & Obsidian Dark Theme */
@@ -366,6 +369,7 @@
     <div class="tabs-nav" id="tabs-nav" style="display:none;">
         <button class="tab-btn active" onclick="switchTab('schedule')">📋 스케줄</button>
         <button class="tab-btn" onclick="switchTab('chat')">💬 AI 비서</button>
+        <button class="tab-btn" onclick="switchTab('novel')">✍ 소설 집필</button>
         <button class="pw-change-btn" onclick="promptPasswordChange()">🔒 비번 변경</button>
     </div>
 
@@ -400,6 +404,99 @@
         </div>
     </div>
 
+    <!-- Novel Writing Panel (NEW) -->
+    <div id="novel-container" style="display:none;">
+        <!-- Left Sidebar: Project List -->
+        <div class="glass-card novel-sidebar">
+            <h3 class="section-title">📚 소설 목록</h3>
+            <select id="novel-project-select" onchange="loadActiveProjectDetails()">
+                <option value="">불러오는 중...</option>
+            </select>
+            <button class="action-btn-primary" onclick="openNewProjectModal()" style="margin-top: 12px; width: 100%;">새 소설 기획</button>
+        </div>
+
+        <!-- Right Main Panel: Status & Logs -->
+        <div class="glass-card novel-main-panel">
+            <h3 id="novel-details-title" class="section-title">📖 기획된 소설이 없습니다</h3>
+            <p id="novel-details-genre" style="color: var(--text-muted); font-size: 0.9em; margin-bottom: 16px;">새 소설 기획을 클릭하여 시작하세요.</p>
+            
+            <!-- Checklist / Chapters -->
+            <div class="chapters-wrapper">
+                <h4>✨ 챕터 목록</h4>
+                <div id="novel-chapters-list" class="chapters-list">
+                    <!-- Chapters will be injected here -->
+                </div>
+            </div>
+
+            <!-- Job Control Panel -->
+            <div class="job-control-panel" style="margin-top: 20px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button id="btn-novel-write-next" class="action-btn-success" onclick="startWritingJob('write_next')" style="display: none;">다음 화 집필 시작</button>
+                    <button id="btn-novel-write-all" class="action-btn-primary" onclick="startWritingJob('write_all')" style="display: none;">전체 화 연속 집필</button>
+                    <button id="btn-novel-pause" class="action-btn-warning" onclick="controlActiveJob('pause')" style="display: none;">일시 정지</button>
+                    <button id="btn-novel-resume" class="action-btn-success" onclick="controlActiveJob('resume')" style="display: none;">작업 재개</button>
+                    <button id="btn-novel-cancel" class="action-btn-danger" onclick="controlActiveJob('cancel')" style="display: none;">집필 중단</button>
+                </div>
+            </div>
+
+            <!-- Progress / Realtime Logs -->
+            <div id="novel-progress-container" class="novel-progress-container" style="display: none; margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 6px;">
+                    <span id="novel-status-text">집필 대기 중</span>
+                    <span id="novel-progress-text">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="novel-progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+                </div>
+                
+                <h4 style="margin-top: 16px; margin-bottom: 8px;">📋 실시간 진행 로그</h4>
+                <div id="novel-logs-box" class="novel-logs-box">
+                    <!-- Logs will be appended here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outline Approval Modal (NEW) -->
+    <div id="outline-approval-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content glass-card">
+            <h3 class="section-title">🔍 3분의 1 상세 줄거리 검토</h3>
+            <p style="font-size: 0.9em; color: var(--text-muted); margin-bottom: 12px;">아래 세부 기획 줄거리를 검토하고 계속 진행할지 여부를 승인해 주세요.</p>
+            <div id="outline-approval-text" class="outline-text-box">
+                <!-- Outline text goes here -->
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 20px; justify-content: flex-end;">
+                <button class="action-btn-danger" onclick="respondToOutline('reject')">반려 및 기획 취소</button>
+                <button class="action-btn-success" onclick="respondToOutline('approve')">승인 및 집필 시작</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Project Creation Modal (NEW) -->
+    <div id="new-project-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content glass-card">
+            <h3 class="section-title">✨ 새 소설 기획 수립</h3>
+            <div class="input-group-vertical" style="display: flex; flex-direction: column; gap: 12px;">
+                <label>
+                    <span style="font-size: 0.85em; color: var(--text-muted);">소설 제목</span>
+                    <input type="text" id="new-project-title" placeholder="소설 제목을 입력하세요" style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white;">
+                </label>
+                <label>
+                    <span style="font-size: 0.85em; color: var(--text-muted);">장르</span>
+                    <input type="text" id="new-project-genre" placeholder="예: SF 미스터리, 판타지, 힐링 일상" style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white;">
+                </label>
+                <label>
+                    <span style="font-size: 0.85em; color: var(--text-muted);">기획 및 컨셉 아이디어</span>
+                    <textarea id="new-project-prompt" rows="5" placeholder="소설의 중심 갈등, 주인공 배경, 주요 소재 및 인과관계를 자유롭게 적어주세요." style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white; resize: none;"></textarea>
+                </label>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 20px; justify-content: flex-end;">
+                <button class="action-btn-danger" onclick="closeNewProjectModal()">취소</button>
+                <button class="action-btn-success" onclick="submitNewProject()">기획안 작성 시작</button>
+            </div>
+        </div>
+    </div>
+
     <div class="bottom-bar-container" id="bottom-bar" style="display:none;">
         <div class="rule-toggle-wrapper">
             <label id="memory-label" title="사용자 정보/사실로 저장합니다">
@@ -424,7 +521,7 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260704-split-info-rule-checkbox-api-fix';
+        const APP_BUILD_ID = '20260711-novel-pwa-v1';
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 
@@ -704,8 +801,10 @@
             activeTab = tab;
             const schedView = document.getElementById('app-container');
             const chatView = document.getElementById('chat-container');
+            const novelView = document.getElementById('novel-container');
             const schedBtn = document.querySelectorAll('.tab-btn')[0];
             const chatBtn = document.querySelectorAll('.tab-btn')[1];
+            const novelBtn = document.querySelectorAll('.tab-btn')[2];
             const input = document.getElementById('new-task-input');
             const ruleCheckbox = document.querySelector('.rule-toggle-wrapper');
             const sendBtn = document.getElementById('send-btn');
@@ -713,26 +812,43 @@
             if(tab === 'schedule') {
                 schedView.style.display = 'block';
                 chatView.style.display = 'none';
+                if (novelView) novelView.style.display = 'none';
                 schedBtn.classList.add('active');
                 chatBtn.classList.remove('active');
+                if (novelBtn) novelBtn.classList.remove('active');
                 input.placeholder = "새로운 할 일 떠오르셨나요?";
                 ruleCheckbox.style.display = 'flex';
                 document.getElementById('memory-label').style.display = 'flex';
                 document.getElementById('rule-label').style.display = 'flex';
                 document.getElementById('web-search-label').style.display = 'none';
                 sendBtn.innerText = "추가";
-            } else {
+                document.getElementById('bottom-bar').style.display = 'flex';
+            } else if (tab === 'chat') {
                 schedView.style.display = 'none';
                 chatView.style.display = 'flex';
+                if (novelView) novelView.style.display = 'none';
                 schedBtn.classList.remove('active');
                 chatBtn.classList.add('active');
+                if (novelBtn) novelBtn.classList.remove('active');
                 input.placeholder = "비서에게 무엇이든 물어보세요...";
                 ruleCheckbox.style.display = 'flex';
                 document.getElementById('memory-label').style.display = 'flex';
                 document.getElementById('rule-label').style.display = 'flex';
                 document.getElementById('web-search-label').style.display = 'flex';
                 sendBtn.innerText = "전송";
+                document.getElementById('bottom-bar').style.display = 'flex';
                 scrollToBottom();
+            } else if (tab === 'novel') {
+                schedView.style.display = 'none';
+                chatView.style.display = 'none';
+                if (novelView) novelView.style.display = 'flex';
+                schedBtn.classList.remove('active');
+                chatBtn.classList.remove('active');
+                if (novelBtn) novelBtn.classList.add('active');
+                document.getElementById('bottom-bar').style.display = 'none';
+                if (typeof loadNovelProjects === 'function') {
+                    loadNovelProjects();
+                }
             }
         }
 

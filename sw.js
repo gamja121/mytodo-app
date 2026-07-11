@@ -1,10 +1,12 @@
-﻿const CACHE_NAME = 'ag-pwa-cache-github-20260703-v1';
+const CACHE_NAME = 'ag-pwa-cache-v4';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
     './sw.js',
     './fresh.html',
-    './manifest.json'
+    './manifest.json',
+    './novel.js',
+    './novel.css'
 ];
 
 self.addEventListener('install', event => {
@@ -57,4 +59,3 @@ self.addEventListener('fetch', event => {
             })
     );
 });
-
