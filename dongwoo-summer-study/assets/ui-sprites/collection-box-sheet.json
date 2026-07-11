@@ -1,0 +1,104 @@
+﻿{
+    "image":  "collection-box-sheet.png",
+    "frameWidth":  300,
+    "frameHeight":  260,
+    "frameCount":  12,
+    "frames":  [
+                   {
+                       "file":  "collection_box_00.png",
+                       "x":  0,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  0
+                   },
+                   {
+                       "file":  "collection_box_01.png",
+                       "x":  300,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  1
+                   },
+                   {
+                       "file":  "collection_box_02.png",
+                       "x":  600,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  2
+                   },
+                   {
+                       "file":  "collection_box_03.png",
+                       "x":  900,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  3
+                   },
+                   {
+                       "file":  "collection_box_04.png",
+                       "x":  1200,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  4
+                   },
+                   {
+                       "file":  "collection_box_05.png",
+                       "x":  1500,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  5
+                   },
+                   {
+                       "file":  "collection_box_06.png",
+                       "x":  1800,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  6
+                   },
+                   {
+                       "file":  "collection_box_07.png",
+                       "x":  2100,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  7
+                   },
+                   {
+                       "file":  "collection_box_08.png",
+                       "x":  2400,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  8
+                   },
+                   {
+                       "file":  "collection_box_09.png",
+                       "x":  2700,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  9
+                   },
+                   {
+                       "file":  "collection_box_10.png",
+                       "x":  3000,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  10
+                   },
+                   {
+                       "file":  "collection_box_11.png",
+                       "x":  3300,
+                       "y":  0,
+                       "w":  300,
+                       "h":  260,
+                       "count":  11
+                   }
+               ]
+}

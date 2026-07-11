@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>동우의 여름방학</title>
+  <link rel="stylesheet" id="appStyles" href="styles.css">
+</head>
+<body>
+  <main class="game-shell" aria-label="동우의 여름방학 게임">
+    <canvas id="gameCanvas" width="1280" height="720" aria-label="게임 화면"></canvas>
+
+    <div class="answer-reveal is-hidden" id="answerReveal" aria-live="assertive" aria-atomic="true">
+      <span>정답</span>
+      <strong id="answerRevealValue">0</strong>
+    </div>
+
+    <section class="hud" aria-label="게임 상태">
+      <div class="brand">
+        <strong>동우의 여름방학</strong>
+        <span id="modeLabel">마당</span>
+      </div>
+      <div class="stats">
+        <span>별 <b id="starCount">0</b></span>
+        <span>곤충 도감 <b id="bugCount">0</b></span>
+        <span>문제 <b id="questCount">0</b>/<b id="questGoal">5</b></span>
+      </div>
+    </section>
+
+    <section class="question-panel" id="questionPanel" aria-label="숫자 문제">
+      <div>
+        <p id="questionText">곤충을 관찰하면 숫자 문제가 나와요.</p>
+        <p id="feedbackText"></p>
+      </div>
+      <div class="answers" id="answers"></div>
+    </section>
+
+    <section class="nayeon-hint-panel is-hidden" id="nayeonHintPanel" aria-live="polite">
+      <img id="nayeonHintImage" src="assets/characters/nayeon/nayeon_hint.png?v=20260621-nayeon" alt="힌트를 알려주는 나연이">
+      <div class="nayeon-hint-bubble">
+        <strong id="nayeonHintTitle">나연이의 생각</strong>
+        <p id="nayeonHintText">같이 천천히 생각해 보자!</p>
+        <div class="nayeon-hint-actions">
+          <button type="button" id="nayeonTryNumber">숫자로 다시 풀기</button>
+          <button type="button" id="nayeonTryDrag">손으로 해보기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-panel is-hidden" id="storyPanel" aria-label="할머니의 미션">
+      <div class="story-copy"><p id="storyText">할머니가 오늘의 미션을 알려줘요.</p></div>
+    </section>
+
+    <aside class="collection-panel" id="collectionPanel" aria-label="곤충 채집함">
+      <div class="collection-head"><strong>채집함</strong><span id="collectionSummary">0 / 11</span></div>
+      <div class="jar" aria-hidden="true"><img id="jarImage" src="assets/ui-sprites/collection_box_00.png" alt=""></div>
+      <div class="collection-list" id="collectionList"></div>
+    </aside>
+
+    <section class="activity-overlay is-hidden" id="activityOverlay" aria-live="polite">
+      <div class="activity-sheet">
+        <span class="activity-stage" id="activityStage">활동 준비</span>
+        <h2 id="activityTitle">활동 제목</h2>
+        <img class="activity-discovery-image is-hidden" id="activityDiscoveryImage" src="" alt="발견한 생물">
+        <img class="activity-praise-sticker is-hidden" id="activityPraiseSticker" src="" alt="칭찬 스티커">
+        <p id="activityDescription">활동 방법을 확인해요.</p>
+        <div class="activity-actions">
+          <button type="button" id="activityPrimary">시작</button>
+          <button type="button" id="activityExit">마당으로</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="controls" aria-label="게임 조작">
+      <button type="button" data-action="diary">그림일기</button>
+      <button type="button" data-action="diaryGuide">곤충도감</button>
+      <button type="button" data-action="guideNext">도감 다음쪽</button>
+      <button type="button" data-action="diaryJournal">오늘기록</button>
+      <button type="button" data-action="todayMission">오늘미션</button>
+      <button type="button" data-action="insects">뒷뜰</button>
+      <button type="button" data-action="kitchen">부엌</button>
+      <button type="button" data-action="yard">마당</button>
+      <button type="button" data-action="chickenCoop">닭장</button>
+      <button type="button" data-action="stream">개울가</button>
+      <button type="button" data-action="streamCrayfish">가재잡기</button>
+      <button type="button" data-action="store">슈퍼</button>
+      <button type="button" data-action="storeShopping">슈퍼 심부름</button>
+      <button type="button" data-action="storeGacha">뽑기</button>
+      <button type="button" data-action="flyGame">파리 잡기</button>
+      <button type="button" data-action="woodMission">장작 넣기</button>
+      <button type="button" data-action="plum">자두 씻기</button>
+      <button type="button" data-action="soban">소반 차리기</button>
+      <button type="button" data-action="cat">수박 먹기</button>
+      <button type="button" data-action="catch">잡기</button>
+      <button type="button" data-action="reset">처음</button>
+    </nav>
+
+    <button type="button" class="scenery-chime" id="parentEntry" aria-label="풍경" title="풍경">
+      <span aria-hidden="true">◇</span><b aria-hidden="true">풍경</b><i aria-hidden="true"></i>
+    </button>
+    <button type="button" class="music-toggle" id="musicToggle" aria-label="배경 음악 끄기" aria-pressed="true">♪</button>
+    <audio id="gameOst" src="assets/audio/dongwoo-summer-ost.mp3" loop preload="auto"></audio>
+
+    <section class="parent-overlay is-hidden" id="parentOverlay" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+      <div class="parent-sheet">
+        <button type="button" class="parent-close" id="parentClose" aria-label="부모 화면 닫기">×</button>
+
+        <div id="parentAuthView">
+          <p class="parent-kicker">보호자 확인</p>
+          <h2 id="parentTitle">부모님 화면</h2>
+          <p>아이의 놀이를 방해하지 않도록 구구단을 확인합니다.</p>
+          <form id="parentAuthForm" class="parent-auth-form">
+            <label for="parentAnswer" id="parentQuestion">3 × 4 = ?</label>
+            <input id="parentAnswer" type="number" inputmode="numeric" autocomplete="off" required>
+            <button type="submit">확인</button>
+          </form>
+          <p class="parent-auth-message" id="parentAuthMessage" aria-live="polite"></p>
+        </div>
+
+        <div id="parentDashboardView" class="is-hidden">
+          <p class="parent-kicker">학습 리포트</p>
+          <h2>동우의 성장 기록</h2>
+          <div class="parent-period-tabs" role="group" aria-label="분석 기간 선택">
+            <button type="button" class="is-active" data-parent-period="today">오늘</button>
+            <button type="button" data-parent-period="yesterday">어제</button>
+            <button type="button" data-parent-period="7days">최근 7일</button>
+          </div>
+          <div class="parent-metrics">
+            <article><span>현재 단계</span><strong id="parentGrade">1단계</strong></article>
+            <article><span>기록된 문제</span><strong id="parentAttempts">0개</strong></article>
+            <article><span>정확도</span><strong id="parentAccuracy">-</strong></article>
+            <article><span>평균 반응시간</span><strong id="parentReaction">-</strong></article>
+            <article><span>힌트 사용률</span><strong id="parentHintRatio">-</strong></article>
+          </div>
+          <p class="parent-trend-summary" id="parentTrendSummary"></p>
+          <div class="parent-daily-trend" id="parentDailyTrend" aria-label="최근 7일 학습 추세"></div>
+          <div class="parent-insights">
+            <article><h3>잘하고 있는 점</h3><p id="parentStrength"></p></article>
+            <article><h3>다음에 도울 점</h3><p id="parentFocus"></p></article>
+            <article><h3>집에서 해볼 놀이</h3><p id="parentHomePlay"></p></article>
+          </div>
+          <div class="parent-actions">
+            <button type="button" id="parentCopy">AI 분석용 자료 복사</button>
+            <button type="button" id="parentRefresh">새로고침</button>
+            <button type="button" id="parentExport">기록 내보내기</button>
+            <button type="button" id="parentImport">기록 가져오기</button>
+            <input type="file" id="parentImportFile" accept="application/json,.json" hidden>
+          </div>
+          <p class="parent-copy-status" id="parentCopyStatus" aria-live="polite"></p>
+          <p class="parent-privacy">자료는 이 기기에만 저장됩니다. 복사 버튼을 누른 뒤 원하는 AI 채팅에 직접 붙여넣으세요.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Keep the public address stable while forcing the tablet to fetch the
+    // newest app files whenever the page is refreshed or opened again.
+    const assetVersion = Date.now().toString(36);
+    document.getElementById("appStyles").href = `styles.css?v=${assetVersion}`;
+    const appScript = document.createElement("script");
+    appScript.src = `game.js?v=${assetVersion}`;
+    document.body.appendChild(appScript);
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+﻿{
+    "image":  "firefly-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "firefly_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  118,
+                       "h":  181,
+                       "sourceX":  111,
+                       "sourceY":  11,
+                       "file":  "firefly_frame_01.png"
+                   },
+                   {
+                       "name":  "firefly_frame_02",
+                       "x":  154,
+                       "y":  18,
+                       "w":  218,
+                       "h":  114,
+                       "sourceX":  406,
+                       "sourceY":  48,
+                       "file":  "firefly_frame_02.png"
+                   },
+                   {
+                       "name":  "firefly_frame_03",
+                       "x":  390,
+                       "y":  18,
+                       "w":  223,
+                       "h":  181,
+                       "sourceX":  1022,
+                       "sourceY":  19,
+                       "file":  "firefly_frame_03.png"
+                   },
+                   {
+                       "name":  "firefly_frame_04",
+                       "x":  631,
+                       "y":  18,
+                       "w":  212,
+                       "h":  119,
+                       "sourceX":  721,
+                       "sourceY":  62,
+                       "file":  "firefly_frame_04.png"
+                   },
+                   {
+                       "name":  "firefly_frame_05",
+                       "x":  18,
+                       "y":  217,
+                       "w":  255,
+                       "h":  180,
+                       "sourceX":  43,
+                       "sourceY":  196,
+                       "file":  "firefly_frame_05.png"
+                   },
+                   {
+                       "name":  "firefly_frame_06",
+                       "x":  291,
+                       "y":  217,
+                       "w":  255,
+                       "h":  169,
+                       "sourceX":  369,
+                       "sourceY":  201,
+                       "file":  "firefly_frame_06.png"
+                   },
+                   {
+                       "name":  "firefly_frame_07",
+                       "x":  564,
+                       "y":  217,
+                       "w":  227,
+                       "h":  156,
+                       "sourceX":  712,
+                       "sourceY":  206,
+                       "file":  "firefly_frame_07.png"
+                   },
+                   {
+                       "name":  "firefly_frame_08",
+                       "x":  18,
+                       "y":  415,
+                       "w":  227,
+                       "h":  157,
+                       "sourceX":  1017,
+                       "sourceY":  201,
+                       "file":  "firefly_frame_08.png"
+                   },
+                   {
+                       "name":  "firefly_frame_09",
+                       "x":  263,
+                       "y":  415,
+                       "w":  268,
+                       "h":  176,
+                       "sourceX":  36,
+                       "sourceY":  360,
+                       "file":  "firefly_frame_09.png"
+                   },
+                   {
+                       "name":  "firefly_frame_10",
+                       "x":  549,
+                       "y":  415,
+                       "w":  242,
+                       "h":  166,
+                       "sourceX":  381,
+                       "sourceY":  364,
+                       "file":  "firefly_frame_10.png"
+                   },
+                   {
+                       "name":  "firefly_frame_11",
+                       "x":  18,
+                       "y":  609,
+                       "w":  234,
+                       "h":  146,
+                       "sourceX":  702,
+                       "sourceY":  378,
+                       "file":  "firefly_frame_11.png"
+                   },
+                   {
+                       "name":  "firefly_frame_12",
+                       "x":  270,
+                       "y":  609,
+                       "w":  254,
+                       "h":  159,
+                       "sourceX":  990,
+                       "sourceY":  369,
+                       "file":  "firefly_frame_12.png"
+                   },
+                   {
+                       "name":  "firefly_frame_13",
+                       "x":  542,
+                       "y":  609,
+                       "w":  240,
+                       "h":  155,
+                       "sourceX":  54,
+                       "sourceY":  532,
+                       "file":  "firefly_frame_13.png"
+                   },
+                   {
+                       "name":  "firefly_frame_14",
+                       "x":  18,
+                       "y":  786,
+                       "w":  284,
+                       "h":  162,
+                       "sourceX":  354,
+                       "sourceY":  536,
+                       "file":  "firefly_frame_14.png"
+                   },
+                   {
+                       "name":  "firefly_frame_15",
+                       "x":  320,
+                       "y":  786,
+                       "w":  260,
+                       "h":  173,
+                       "sourceX":  690,
+                       "sourceY":  525,
+                       "file":  "firefly_frame_15.png"
+                   },
+                   {
+                       "name":  "firefly_frame_16",
+                       "x":  598,
+                       "y":  786,
+                       "w":  241,
+                       "h":  149,
+                       "sourceX":  994,
+                       "sourceY":  545,
+                       "file":  "firefly_frame_16.png"
+                   }
+               ]
+}

@@ -1,0 +1,62 @@
+﻿{
+    "egg_blue":  {
+                     "y":  349,
+                     "width":  58,
+                     "height":  82,
+                     "x":  921
+                 },
+    "egg_yellow":  {
+                       "y":  349,
+                       "width":  57,
+                       "height":  82,
+                       "x":  541
+                   },
+    "feather_large":  {
+                          "y":  596,
+                          "width":  65,
+                          "height":  108,
+                          "x":  917
+                      },
+    "feather_small":  {
+                          "y":  624,
+                          "width":  78,
+                          "height":  51,
+                          "x":  151
+                      },
+    "feather_medium":  {
+                           "y":  602,
+                           "width":  67,
+                           "height":  96,
+                           "x":  536
+                       },
+    "feather_group":  {
+                          "y":  858,
+                          "width":  86,
+                          "height":  104,
+                          "x":  147
+                      },
+    "nest_empty":  {
+                       "y":  55,
+                       "width":  245,
+                       "height":  150,
+                       "x":  447
+                   },
+    "basket_empty":  {
+                         "y":  0,
+                         "width":  335,
+                         "height":  260,
+                         "x":  22
+                     },
+    "egg_cream":  {
+                      "y":  349,
+                      "width":  57,
+                      "height":  82,
+                      "x":  161
+                  },
+    "nest_full":  {
+                      "y":  55,
+                      "width":  247,
+                      "height":  150,
+                      "x":  826
+                  }
+}

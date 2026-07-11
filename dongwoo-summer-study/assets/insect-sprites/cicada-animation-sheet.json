@@ -1,0 +1,166 @@
+﻿{
+    "image":  "cicada-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "cicada_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  125,
+                       "h":  200,
+                       "sourceX":  112,
+                       "sourceY":  24,
+                       "file":  "cicada_frame_01.png"
+                   },
+                   {
+                       "name":  "cicada_frame_02",
+                       "x":  161,
+                       "y":  18,
+                       "w":  207,
+                       "h":  158,
+                       "sourceX":  1011,
+                       "sourceY":  29,
+                       "file":  "cicada_frame_02.png"
+                   },
+                   {
+                       "name":  "cicada_frame_03",
+                       "x":  386,
+                       "y":  18,
+                       "w":  216,
+                       "h":  103,
+                       "sourceX":  380,
+                       "sourceY":  75,
+                       "file":  "cicada_frame_03.png"
+                   },
+                   {
+                       "name":  "cicada_frame_04",
+                       "x":  620,
+                       "y":  18,
+                       "w":  225,
+                       "h":  117,
+                       "sourceX":  686,
+                       "sourceY":  66,
+                       "file":  "cicada_frame_04.png"
+                   },
+                   {
+                       "name":  "cicada_frame_05",
+                       "x":  18,
+                       "y":  236,
+                       "w":  299,
+                       "h":  159,
+                       "sourceX":  26,
+                       "sourceY":  212,
+                       "file":  "cicada_frame_05.png"
+                   },
+                   {
+                       "name":  "cicada_frame_06",
+                       "x":  335,
+                       "y":  236,
+                       "w":  223,
+                       "h":  169,
+                       "sourceX":  366,
+                       "sourceY":  198,
+                       "file":  "cicada_frame_06.png"
+                   },
+                   {
+                       "name":  "cicada_frame_07",
+                       "x":  576,
+                       "y":  236,
+                       "w":  216,
+                       "h":  161,
+                       "sourceX":  687,
+                       "sourceY":  206,
+                       "file":  "cicada_frame_07.png"
+                   },
+                   {
+                       "name":  "cicada_frame_08",
+                       "x":  18,
+                       "y":  423,
+                       "w":  209,
+                       "h":  149,
+                       "sourceX":  1005,
+                       "sourceY":  214,
+                       "file":  "cicada_frame_08.png"
+                   },
+                   {
+                       "name":  "cicada_frame_09",
+                       "x":  245,
+                       "y":  423,
+                       "w":  270,
+                       "h":  184,
+                       "sourceX":  41,
+                       "sourceY":  364,
+                       "file":  "cicada_frame_09.png"
+                   },
+                   {
+                       "name":  "cicada_frame_10",
+                       "x":  533,
+                       "y":  423,
+                       "w":  210,
+                       "h":  160,
+                       "sourceX":  376,
+                       "sourceY":  372,
+                       "file":  "cicada_frame_10.png"
+                   },
+                   {
+                       "name":  "cicada_frame_11",
+                       "x":  761,
+                       "y":  423,
+                       "w":  212,
+                       "h":  152,
+                       "sourceX":  688,
+                       "sourceY":  380,
+                       "file":  "cicada_frame_11.png"
+                   },
+                   {
+                       "name":  "cicada_frame_12",
+                       "x":  18,
+                       "y":  625,
+                       "w":  219,
+                       "h":  164,
+                       "sourceX":  997,
+                       "sourceY":  368,
+                       "file":  "cicada_frame_12.png"
+                   },
+                   {
+                       "name":  "cicada_frame_13",
+                       "x":  255,
+                       "y":  625,
+                       "w":  230,
+                       "h":  151,
+                       "sourceX":  30,
+                       "sourceY":  534,
+                       "file":  "cicada_frame_13.png"
+                   },
+                   {
+                       "name":  "cicada_frame_14",
+                       "x":  503,
+                       "y":  625,
+                       "w":  322,
+                       "h":  156,
+                       "sourceX":  334,
+                       "sourceY":  542,
+                       "file":  "cicada_frame_14.png"
+                   },
+                   {
+                       "name":  "cicada_frame_15",
+                       "x":  18,
+                       "y":  807,
+                       "w":  256,
+                       "h":  148,
+                       "sourceX":  688,
+                       "sourceY":  550,
+                       "file":  "cicada_frame_15.png"
+                   },
+                   {
+                       "name":  "cicada_frame_16",
+                       "x":  292,
+                       "y":  807,
+                       "w":  214,
+                       "h":  157,
+                       "sourceX":  998,
+                       "sourceY":  537,
+                       "file":  "cicada_frame_16.png"
+                   }
+               ]
+}

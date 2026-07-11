@@ -1,0 +1,192 @@
+﻿{
+    "image":  "dongwoo-basic-animation-sheet.png",
+    "chromakeySource":  "dongwoo-basic-animation-sheet-chromakey.png",
+    "frameCount":  12,
+    "grid":  {
+                 "cellHeight":  418,
+                 "rows":  3,
+                 "cellWidth":  313,
+                 "columns":  4
+             },
+    "animations":  [
+                       {
+                           "frames":  [
+                                          "dongwoo_idle_01",
+                                          "dongwoo_idle_02",
+                                          "dongwoo_idle_03",
+                                          "dongwoo_idle_04"
+                                      ],
+                           "loop":  true,
+                           "name":  "idle",
+                           "fps":  4
+                       },
+                       {
+                           "frames":  [
+                                          "dongwoo_walk_01",
+                                          "dongwoo_walk_02",
+                                          "dongwoo_walk_03",
+                                          "dongwoo_walk_04"
+                                      ],
+                           "loop":  true,
+                           "name":  "walk",
+                           "fps":  8
+                       },
+                       {
+                           "frames":  [
+                                          "dongwoo_catch_01",
+                                          "dongwoo_catch_02",
+                                          "dongwoo_catch_03",
+                                          "dongwoo_catch_04"
+                                      ],
+                           "loop":  false,
+                           "name":  "catch",
+                           "fps":  8
+                       }
+                   ],
+    "frames":  [
+                   {
+                       "name":  "dongwoo_idle_01",
+                       "action":  "idle",
+                       "frame":  1,
+                       "sheetX":  0,
+                       "sheetY":  0,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_idle_01.png",
+                       "width":  254,
+                       "height":  323
+                   },
+                   {
+                       "name":  "dongwoo_idle_02",
+                       "action":  "idle",
+                       "frame":  2,
+                       "sheetX":  313,
+                       "sheetY":  0,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_idle_02.png",
+                       "width":  263,
+                       "height":  323
+                   },
+                   {
+                       "name":  "dongwoo_idle_03",
+                       "action":  "idle",
+                       "frame":  3,
+                       "sheetX":  626,
+                       "sheetY":  0,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_idle_03.png",
+                       "width":  265,
+                       "height":  322
+                   },
+                   {
+                       "name":  "dongwoo_idle_04",
+                       "action":  "idle",
+                       "frame":  4,
+                       "sheetX":  939,
+                       "sheetY":  0,
+                       "sheetW":  315,
+                       "sheetH":  418,
+                       "file":  "dongwoo_idle_04.png",
+                       "width":  271,
+                       "height":  324
+                   },
+                   {
+                       "name":  "dongwoo_walk_01",
+                       "action":  "walk",
+                       "frame":  1,
+                       "sheetX":  0,
+                       "sheetY":  418,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_walk_01.png",
+                       "width":  236,
+                       "height":  311
+                   },
+                   {
+                       "name":  "dongwoo_walk_02",
+                       "action":  "walk",
+                       "frame":  2,
+                       "sheetX":  313,
+                       "sheetY":  418,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_walk_02.png",
+                       "width":  284,
+                       "height":  392
+                   },
+                   {
+                       "name":  "dongwoo_walk_03",
+                       "action":  "walk",
+                       "frame":  3,
+                       "sheetX":  626,
+                       "sheetY":  418,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_walk_03.png",
+                       "width":  262,
+                       "height":  316
+                   },
+                   {
+                       "name":  "dongwoo_walk_04",
+                       "action":  "walk",
+                       "frame":  4,
+                       "sheetX":  939,
+                       "sheetY":  418,
+                       "sheetW":  315,
+                       "sheetH":  418,
+                       "file":  "dongwoo_walk_04.png",
+                       "width":  228,
+                       "height":  308
+                   },
+                   {
+                       "name":  "dongwoo_catch_01",
+                       "action":  "catch",
+                       "frame":  1,
+                       "sheetX":  0,
+                       "sheetY":  836,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_catch_01.png",
+                       "width":  272,
+                       "height":  311
+                   },
+                   {
+                       "name":  "dongwoo_catch_02",
+                       "action":  "catch",
+                       "frame":  2,
+                       "sheetX":  313,
+                       "sheetY":  836,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_catch_02.png",
+                       "width":  266,
+                       "height":  328
+                   },
+                   {
+                       "name":  "dongwoo_catch_03",
+                       "action":  "catch",
+                       "frame":  3,
+                       "sheetX":  626,
+                       "sheetY":  836,
+                       "sheetW":  313,
+                       "sheetH":  418,
+                       "file":  "dongwoo_catch_03.png",
+                       "width":  291,
+                       "height":  309
+                   },
+                   {
+                       "name":  "dongwoo_catch_04",
+                       "action":  "catch",
+                       "frame":  4,
+                       "sheetX":  939,
+                       "sheetY":  836,
+                       "sheetW":  315,
+                       "sheetH":  418,
+                       "file":  "dongwoo_catch_04.png",
+                       "width":  287,
+                       "height":  310
+                   }
+               ]
+}

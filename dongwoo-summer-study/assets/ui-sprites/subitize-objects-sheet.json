@@ -1,0 +1,13 @@
+{
+  "image": "subitize-objects-sheet.png",
+  "frameWidth": 362,
+  "frameHeight": 271.5,
+  "columns": 4,
+  "rows": 4,
+  "sprites": {
+    "seed": { "row": 0, "label": "수박씨" },
+    "stone": { "row": 1, "label": "조약돌" },
+    "leaf": { "row": 2, "label": "나뭇잎" },
+    "petal": { "row": 3, "label": "꽃잎" }
+  }
+}

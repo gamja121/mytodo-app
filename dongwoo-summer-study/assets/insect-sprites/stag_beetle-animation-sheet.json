@@ -1,0 +1,166 @@
+﻿{
+    "image":  "stag_beetle-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "stag_beetle_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  148,
+                       "h":  215,
+                       "sourceX":  102,
+                       "sourceY":  4,
+                       "file":  "stag_beetle_frame_01.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_02",
+                       "x":  184,
+                       "y":  18,
+                       "w":  233,
+                       "h":  132,
+                       "sourceX":  705,
+                       "sourceY":  55,
+                       "file":  "stag_beetle_frame_02.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_03",
+                       "x":  435,
+                       "y":  18,
+                       "w":  248,
+                       "h":  144,
+                       "sourceX":  1000,
+                       "sourceY":  44,
+                       "file":  "stag_beetle_frame_03.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_04",
+                       "x":  701,
+                       "y":  18,
+                       "w":  237,
+                       "h":  120,
+                       "sourceX":  389,
+                       "sourceY":  70,
+                       "file":  "stag_beetle_frame_04.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_05",
+                       "x":  18,
+                       "y":  251,
+                       "w":  255,
+                       "h":  189,
+                       "sourceX":  36,
+                       "sourceY":  201,
+                       "file":  "stag_beetle_frame_05.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_06",
+                       "x":  291,
+                       "y":  251,
+                       "w":  256,
+                       "h":  162,
+                       "sourceX":  369,
+                       "sourceY":  204,
+                       "file":  "stag_beetle_frame_06.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_07",
+                       "x":  565,
+                       "y":  251,
+                       "w":  254,
+                       "h":  160,
+                       "sourceX":  685,
+                       "sourceY":  208,
+                       "file":  "stag_beetle_frame_07.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_08",
+                       "x":  18,
+                       "y":  458,
+                       "w":  254,
+                       "h":  147,
+                       "sourceX":  998,
+                       "sourceY":  216,
+                       "file":  "stag_beetle_frame_08.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_09",
+                       "x":  290,
+                       "y":  458,
+                       "w":  245,
+                       "h":  169,
+                       "sourceX":  46,
+                       "sourceY":  377,
+                       "file":  "stag_beetle_frame_09.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_10",
+                       "x":  553,
+                       "y":  458,
+                       "w":  249,
+                       "h":  153,
+                       "sourceX":  369,
+                       "sourceY":  379,
+                       "file":  "stag_beetle_frame_10.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_11",
+                       "x":  18,
+                       "y":  645,
+                       "w":  248,
+                       "h":  143,
+                       "sourceX":  684,
+                       "sourceY":  388,
+                       "file":  "stag_beetle_frame_11.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_12",
+                       "x":  284,
+                       "y":  645,
+                       "w":  244,
+                       "h":  152,
+                       "sourceX":  998,
+                       "sourceY":  381,
+                       "file":  "stag_beetle_frame_12.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_13",
+                       "x":  546,
+                       "y":  645,
+                       "w":  260,
+                       "h":  152,
+                       "sourceX":  36,
+                       "sourceY":  534,
+                       "file":  "stag_beetle_frame_13.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_14",
+                       "x":  18,
+                       "y":  815,
+                       "w":  278,
+                       "h":  180,
+                       "sourceX":  355,
+                       "sourceY":  518,
+                       "file":  "stag_beetle_frame_14.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_15",
+                       "x":  314,
+                       "y":  815,
+                       "w":  255,
+                       "h":  178,
+                       "sourceX":  688,
+                       "sourceY":  520,
+                       "file":  "stag_beetle_frame_15.png"
+                   },
+                   {
+                       "name":  "stag_beetle_frame_16",
+                       "x":  587,
+                       "y":  815,
+                       "w":  238,
+                       "h":  149,
+                       "sourceX":  1003,
+                       "sourceY":  545,
+                       "file":  "stag_beetle_frame_16.png"
+                   }
+               ]
+}

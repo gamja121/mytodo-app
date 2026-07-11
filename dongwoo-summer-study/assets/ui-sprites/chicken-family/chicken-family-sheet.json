@@ -1,0 +1,68 @@
+﻿{
+    "chick_group":  {
+                        "y":  180,
+                        "width":  121,
+                        "height":  90,
+                        "x":  49
+                    },
+    "hen_walk":  {
+                     "y":  316,
+                     "width":  118,
+                     "height":  118,
+                     "x":  271
+                 },
+    "hen_stand":  {
+                      "y":  316,
+                      "width":  120,
+                      "height":  118,
+                      "x":  50
+                  },
+    "rooster_stand":  {
+                          "y":  163,
+                          "width":  143,
+                          "height":  124,
+                          "x":  258
+                      },
+    "chick_peck":  {
+                       "y":  43,
+                       "width":  94,
+                       "height":  64,
+                       "x":  503
+                   },
+    "hen_peck":  {
+                     "y":  328,
+                     "width":  121,
+                     "height":  94,
+                     "x":  489
+                 },
+    "chick_pair":  {
+                       "y":  34,
+                       "width":  120,
+                       "height":  82,
+                       "x":  710
+                   },
+    "rooster_peck":  {
+                         "y":  177,
+                         "width":  139,
+                         "height":  96,
+                         "x":  700
+                     },
+    "chick_walk":  {
+                       "y":  31,
+                       "width":  77,
+                       "height":  88,
+                       "x":  291
+                   },
+    "chick_stand":  {
+                        "y":  31,
+                        "width":  73,
+                        "height":  88,
+                        "x":  73
+                    },
+    "rooster_walk":  {
+                         "y":  163,
+                         "width":  123,
+                         "height":  124,
+                         "x":  488
+                     }
+}
