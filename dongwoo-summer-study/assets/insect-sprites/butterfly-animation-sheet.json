@@ -1,0 +1,166 @@
+﻿{
+    "image":  "butterfly-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "butterfly_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  227,
+                       "h":  164,
+                       "sourceX":  48,
+                       "sourceY":  46,
+                       "file":  "butterfly_frame_01.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_02",
+                       "x":  263,
+                       "y":  18,
+                       "w":  199,
+                       "h":  155,
+                       "sourceX":  373,
+                       "sourceY":  37,
+                       "file":  "butterfly_frame_02.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_03",
+                       "x":  480,
+                       "y":  18,
+                       "w":  168,
+                       "h":  171,
+                       "sourceX":  699,
+                       "sourceY":  23,
+                       "file":  "butterfly_frame_03.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_04",
+                       "x":  666,
+                       "y":  18,
+                       "w":  228,
+                       "h":  153,
+                       "sourceX":  1003,
+                       "sourceY":  52,
+                       "file":  "butterfly_frame_04.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_05",
+                       "x":  18,
+                       "y":  207,
+                       "w":  199,
+                       "h":  161,
+                       "sourceX":  68,
+                       "sourceY":  217,
+                       "file":  "butterfly_frame_05.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_06",
+                       "x":  235,
+                       "y":  207,
+                       "w":  160,
+                       "h":  152,
+                       "sourceX":  402,
+                       "sourceY":  206,
+                       "file":  "butterfly_frame_06.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_07",
+                       "x":  413,
+                       "y":  207,
+                       "w":  165,
+                       "h":  154,
+                       "sourceX":  704,
+                       "sourceY":  201,
+                       "file":  "butterfly_frame_07.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_08",
+                       "x":  596,
+                       "y":  207,
+                       "w":  155,
+                       "h":  151,
+                       "sourceX":  1053,
+                       "sourceY":  208,
+                       "file":  "butterfly_frame_08.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_09",
+                       "x":  769,
+                       "y":  207,
+                       "w":  148,
+                       "h":  141,
+                       "sourceX":  65,
+                       "sourceY":  375,
+                       "file":  "butterfly_frame_09.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_10",
+                       "x":  18,
+                       "y":  386,
+                       "w":  191,
+                       "h":  147,
+                       "sourceX":  399,
+                       "sourceY":  368,
+                       "file":  "butterfly_frame_10.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_11",
+                       "x":  227,
+                       "y":  386,
+                       "w":  196,
+                       "h":  138,
+                       "sourceX":  684,
+                       "sourceY":  373,
+                       "file":  "butterfly_frame_11.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_12",
+                       "x":  441,
+                       "y":  386,
+                       "w":  194,
+                       "h":  142,
+                       "sourceX":  1024,
+                       "sourceY":  378,
+                       "file":  "butterfly_frame_12.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_13",
+                       "x":  653,
+                       "y":  386,
+                       "w":  154,
+                       "h":  145,
+                       "sourceX":  59,
+                       "sourceY":  529,
+                       "file":  "butterfly_frame_13.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_14",
+                       "x":  825,
+                       "y":  386,
+                       "w":  153,
+                       "h":  145,
+                       "sourceX":  385,
+                       "sourceY":  529,
+                       "file":  "butterfly_frame_14.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_15",
+                       "x":  18,
+                       "y":  551,
+                       "w":  201,
+                       "h":  146,
+                       "sourceX":  653,
+                       "sourceY":  536,
+                       "file":  "butterfly_frame_15.png"
+                   },
+                   {
+                       "name":  "butterfly_frame_16",
+                       "x":  237,
+                       "y":  551,
+                       "w":  206,
+                       "h":  134,
+                       "sourceX":  1044,
+                       "sourceY":  548,
+                       "file":  "butterfly_frame_16.png"
+                   }
+               ]
+}

@@ -1,0 +1,234 @@
+﻿[
+    {
+        "name":  "title_logo",
+        "x":  16,
+        "y":  16,
+        "w":  388,
+        "h":  81,
+        "file":  "title_logo.png"
+    },
+    {
+        "name":  "health_bar_half",
+        "x":  420,
+        "y":  16,
+        "w":  163,
+        "h":  41,
+        "file":  "health_bar_half.png"
+    },
+    {
+        "name":  "health_hearts_4",
+        "x":  599,
+        "y":  16,
+        "w":  163,
+        "h":  42,
+        "file":  "health_hearts_4.png"
+    },
+    {
+        "name":  "health_hearts_2",
+        "x":  778,
+        "y":  16,
+        "w":  163,
+        "h":  42,
+        "file":  "health_hearts_2.png"
+    },
+    {
+        "name":  "health_heart_1",
+        "x":  16,
+        "y":  113,
+        "w":  164,
+        "h":  42,
+        "file":  "health_heart_1.png"
+    },
+    {
+        "name":  "wind_chime_fish",
+        "x":  196,
+        "y":  113,
+        "w":  117,
+        "h":  223,
+        "file":  "wind_chime_fish.png"
+    },
+    {
+        "name":  "watermelon_slice",
+        "x":  329,
+        "y":  113,
+        "w":  94,
+        "h":  64,
+        "file":  "watermelon_slice.png"
+    },
+    {
+        "name":  "water_pump",
+        "x":  439,
+        "y":  113,
+        "w":  72,
+        "h":  98,
+        "file":  "water_pump.png"
+    },
+    {
+        "name":  "crayons",
+        "x":  527,
+        "y":  113,
+        "w":  77,
+        "h":  73,
+        "file":  "crayons.png"
+    },
+    {
+        "name":  "round_table_large",
+        "x":  620,
+        "y":  113,
+        "w":  109,
+        "h":  76,
+        "file":  "round_table_large.png"
+    },
+    {
+        "name":  "round_table_small",
+        "x":  745,
+        "y":  113,
+        "w":  95,
+        "h":  68,
+        "file":  "round_table_small.png"
+    },
+    {
+        "name":  "open_book",
+        "x":  856,
+        "y":  113,
+        "w":  88,
+        "h":  63,
+        "file":  "open_book.png"
+    },
+    {
+        "name":  "quest_watermelon_done",
+        "x":  16,
+        "y":  352,
+        "w":  82,
+        "h":  82,
+        "file":  "quest_watermelon_done.png"
+    },
+    {
+        "name":  "quest_watermelon_done_alt",
+        "x":  114,
+        "y":  352,
+        "w":  82,
+        "h":  82,
+        "file":  "quest_watermelon_done_alt.png"
+    },
+    {
+        "name":  "quest_inactive",
+        "x":  212,
+        "y":  352,
+        "w":  70,
+        "h":  76,
+        "file":  "quest_inactive.png"
+    },
+    {
+        "name":  "button_eat",
+        "x":  298,
+        "y":  352,
+        "w":  92,
+        "h":  57,
+        "file":  "button_eat.png"
+    },
+    {
+        "name":  "button_pump",
+        "x":  406,
+        "y":  352,
+        "w":  96,
+        "h":  56,
+        "file":  "button_pump.png"
+    },
+    {
+        "name":  "button_move",
+        "x":  518,
+        "y":  352,
+        "w":  96,
+        "h":  57,
+        "file":  "button_move.png"
+    },
+    {
+        "name":  "button_ok",
+        "x":  630,
+        "y":  352,
+        "w":  94,
+        "h":  57,
+        "file":  "button_ok.png"
+    },
+    {
+        "name":  "button_cancel",
+        "x":  740,
+        "y":  352,
+        "w":  90,
+        "h":  57,
+        "file":  "button_cancel.png"
+    },
+    {
+        "name":  "button_settings",
+        "x":  846,
+        "y":  352,
+        "w":  93,
+        "h":  57,
+        "file":  "button_settings.png"
+    },
+    {
+        "name":  "cursor_arrow",
+        "x":  955,
+        "y":  352,
+        "w":  52,
+        "h":  68,
+        "file":  "cursor_arrow.png"
+    },
+    {
+        "name":  "cursor_hand",
+        "x":  16,
+        "y":  450,
+        "w":  56,
+        "h":  65,
+        "file":  "cursor_hand.png"
+    },
+    {
+        "name":  "cursor_click",
+        "x":  88,
+        "y":  450,
+        "w":  55,
+        "h":  68,
+        "file":  "cursor_click.png"
+    },
+    {
+        "name":  "cursor_hover",
+        "x":  159,
+        "y":  450,
+        "w":  51,
+        "h":  67,
+        "file":  "cursor_hover.png"
+    },
+    {
+        "name":  "speech_bubble",
+        "x":  226,
+        "y":  450,
+        "w":  168,
+        "h":  125,
+        "file":  "speech_bubble.png"
+    },
+    {
+        "name":  "arrow_left",
+        "x":  410,
+        "y":  450,
+        "w":  41,
+        "h":  46,
+        "file":  "arrow_left.png"
+    },
+    {
+        "name":  "scroll_paper",
+        "x":  467,
+        "y":  450,
+        "w":  41,
+        "h":  114,
+        "file":  "scroll_paper.png"
+    },
+    {
+        "name":  "arrow_right",
+        "x":  524,
+        "y":  450,
+        "w":  37,
+        "h":  41,
+        "file":  "arrow_right.png"
+    }
+]

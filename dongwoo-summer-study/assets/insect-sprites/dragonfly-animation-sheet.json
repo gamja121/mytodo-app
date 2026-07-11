@@ -1,0 +1,166 @@
+﻿{
+    "image":  "dragonfly-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "dragonfly_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  249,
+                       "h":  179,
+                       "sourceX":  47,
+                       "sourceY":  39,
+                       "file":  "dragonfly_frame_01.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_02",
+                       "x":  285,
+                       "y":  18,
+                       "w":  242,
+                       "h":  178,
+                       "sourceX":  366,
+                       "sourceY":  40,
+                       "file":  "dragonfly_frame_02.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_03",
+                       "x":  545,
+                       "y":  18,
+                       "w":  248,
+                       "h":  179,
+                       "sourceX":  678,
+                       "sourceY":  42,
+                       "file":  "dragonfly_frame_03.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_04",
+                       "x":  18,
+                       "y":  215,
+                       "w":  248,
+                       "h":  176,
+                       "sourceX":  992,
+                       "sourceY":  43,
+                       "file":  "dragonfly_frame_04.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_05",
+                       "x":  284,
+                       "y":  215,
+                       "w":  247,
+                       "h":  137,
+                       "sourceX":  48,
+                       "sourceY":  228,
+                       "file":  "dragonfly_frame_05.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_06",
+                       "x":  549,
+                       "y":  215,
+                       "w":  241,
+                       "h":  131,
+                       "sourceX":  366,
+                       "sourceY":  221,
+                       "file":  "dragonfly_frame_06.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_07",
+                       "x":  18,
+                       "y":  409,
+                       "w":  248,
+                       "h":  123,
+                       "sourceX":  679,
+                       "sourceY":  229,
+                       "file":  "dragonfly_frame_07.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_08",
+                       "x":  284,
+                       "y":  409,
+                       "w":  247,
+                       "h":  111,
+                       "sourceX":  993,
+                       "sourceY":  230,
+                       "file":  "dragonfly_frame_08.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_09",
+                       "x":  549,
+                       "y":  409,
+                       "w":  192,
+                       "h":  143,
+                       "sourceX":  69,
+                       "sourceY":  384,
+                       "file":  "dragonfly_frame_09.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_10",
+                       "x":  759,
+                       "y":  409,
+                       "w":  193,
+                       "h":  160,
+                       "sourceX":  387,
+                       "sourceY":  367,
+                       "file":  "dragonfly_frame_10.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_11",
+                       "x":  18,
+                       "y":  587,
+                       "w":  252,
+                       "h":  88,
+                       "sourceX":  676,
+                       "sourceY":  423,
+                       "file":  "dragonfly_frame_11.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_12",
+                       "x":  288,
+                       "y":  587,
+                       "w":  192,
+                       "h":  150,
+                       "sourceX":  1020,
+                       "sourceY":  376,
+                       "file":  "dragonfly_frame_12.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_13",
+                       "x":  498,
+                       "y":  587,
+                       "w":  193,
+                       "h":  105,
+                       "sourceX":  68,
+                       "sourceY":  573,
+                       "file":  "dragonfly_frame_13.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_14",
+                       "x":  709,
+                       "y":  587,
+                       "w":  199,
+                       "h":  154,
+                       "sourceX":  387,
+                       "sourceY":  528,
+                       "file":  "dragonfly_frame_14.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_15",
+                       "x":  18,
+                       "y":  759,
+                       "w":  202,
+                       "h":  131,
+                       "sourceX":  702,
+                       "sourceY":  551,
+                       "file":  "dragonfly_frame_15.png"
+                   },
+                   {
+                       "name":  "dragonfly_frame_16",
+                       "x":  238,
+                       "y":  759,
+                       "w":  195,
+                       "h":  149,
+                       "sourceX":  1021,
+                       "sourceY":  531,
+                       "file":  "dragonfly_frame_16.png"
+                   }
+               ]
+}

@@ -1,0 +1,166 @@
+﻿{
+    "image":  "ladybug-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "ladybug_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  141,
+                       "h":  152,
+                       "sourceX":  97,
+                       "sourceY":  44,
+                       "file":  "ladybug_frame_01.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_02",
+                       "x":  177,
+                       "y":  18,
+                       "w":  142,
+                       "h":  155,
+                       "sourceX":  412,
+                       "sourceY":  44,
+                       "file":  "ladybug_frame_02.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_03",
+                       "x":  337,
+                       "y":  18,
+                       "w":  268,
+                       "h":  144,
+                       "sourceX":  658,
+                       "sourceY":  48,
+                       "file":  "ladybug_frame_03.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_04",
+                       "x":  623,
+                       "y":  18,
+                       "w":  265,
+                       "h":  146,
+                       "sourceX":  985,
+                       "sourceY":  45,
+                       "file":  "ladybug_frame_04.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_05",
+                       "x":  18,
+                       "y":  191,
+                       "w":  256,
+                       "h":  163,
+                       "sourceX":  32,
+                       "sourceY":  212,
+                       "file":  "ladybug_frame_05.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_06",
+                       "x":  292,
+                       "y":  191,
+                       "w":  266,
+                       "h":  163,
+                       "sourceX":  345,
+                       "sourceY":  210,
+                       "file":  "ladybug_frame_06.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_07",
+                       "x":  576,
+                       "y":  191,
+                       "w":  192,
+                       "h":  153,
+                       "sourceX":  692,
+                       "sourceY":  217,
+                       "file":  "ladybug_frame_07.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_08",
+                       "x":  786,
+                       "y":  191,
+                       "w":  191,
+                       "h":  155,
+                       "sourceX":  1021,
+                       "sourceY":  212,
+                       "file":  "ladybug_frame_08.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_09",
+                       "x":  18,
+                       "y":  372,
+                       "w":  234,
+                       "h":  139,
+                       "sourceX":  36,
+                       "sourceY":  388,
+                       "file":  "ladybug_frame_09.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_10",
+                       "x":  270,
+                       "y":  372,
+                       "w":  188,
+                       "h":  143,
+                       "sourceX":  379,
+                       "sourceY":  384,
+                       "file":  "ladybug_frame_10.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_11",
+                       "x":  476,
+                       "y":  372,
+                       "w":  220,
+                       "h":  142,
+                       "sourceX":  686,
+                       "sourceY":  384,
+                       "file":  "ladybug_frame_11.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_12",
+                       "x":  714,
+                       "y":  372,
+                       "w":  179,
+                       "h":  157,
+                       "sourceX":  1019,
+                       "sourceY":  373,
+                       "file":  "ladybug_frame_12.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_13",
+                       "x":  18,
+                       "y":  547,
+                       "w":  183,
+                       "h":  148,
+                       "sourceX":  54,
+                       "sourceY":  536,
+                       "file":  "ladybug_frame_13.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_14",
+                       "x":  219,
+                       "y":  547,
+                       "w":  152,
+                       "h":  145,
+                       "sourceX":  400,
+                       "sourceY":  537,
+                       "file":  "ladybug_frame_14.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_15",
+                       "x":  389,
+                       "y":  547,
+                       "w":  220,
+                       "h":  148,
+                       "sourceX":  688,
+                       "sourceY":  537,
+                       "file":  "ladybug_frame_15.png"
+                   },
+                   {
+                       "name":  "ladybug_frame_16",
+                       "x":  627,
+                       "y":  547,
+                       "w":  277,
+                       "h":  129,
+                       "sourceX":  990,
+                       "sourceY":  547,
+                       "file":  "ladybug_frame_16.png"
+                   }
+               ]
+}

@@ -1,0 +1,38 @@
+﻿{
+    "name":  "insect_collection_map",
+    "type":  "map_foreground",
+    "raw":  "insect-collection-map-raw.jpg",
+    "transparent":  "insect-collection-map-transparent.png",
+    "originalSize":  {
+                         "height":  698,
+                         "width":  1280
+                     },
+    "transparentSize":  {
+                            "height":  698,
+                            "width":  1280
+                        },
+    "suggestedUse":  "곤충채집 장면의 풀숲/꽃밭 맵 전경 레이어. 나비 스프라이트는 이 위를 이동하거나 꽃 주변에 랜덤 스폰.",
+    "spawnZones":  [
+                       {
+                           "y":  260,
+                           "w":  260,
+                           "name":  "left_flowers",
+                           "h":  170,
+                           "x":  90
+                       },
+                       {
+                           "y":  250,
+                           "w":  300,
+                           "name":  "center_clover",
+                           "h":  180,
+                           "x":  430
+                       },
+                       {
+                           "y":  230,
+                           "w":  330,
+                           "name":  "right_log",
+                           "h":  210,
+                           "x":  820
+                       }
+                   ]
+}

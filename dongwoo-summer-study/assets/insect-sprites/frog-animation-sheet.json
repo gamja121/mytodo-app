@@ -1,0 +1,166 @@
+﻿{
+    "image":  "frog-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "frog_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  211,
+                       "h":  147,
+                       "sourceX":  73,
+                       "sourceY":  40,
+                       "file":  "frog_frame_01.png"
+                   },
+                   {
+                       "name":  "frog_frame_02",
+                       "x":  247,
+                       "y":  18,
+                       "w":  214,
+                       "h":  140,
+                       "sourceX":  385,
+                       "sourceY":  47,
+                       "file":  "frog_frame_02.png"
+                   },
+                   {
+                       "name":  "frog_frame_03",
+                       "x":  479,
+                       "y":  18,
+                       "w":  217,
+                       "h":  131,
+                       "sourceX":  693,
+                       "sourceY":  56,
+                       "file":  "frog_frame_03.png"
+                   },
+                   {
+                       "name":  "frog_frame_04",
+                       "x":  714,
+                       "y":  18,
+                       "w":  209,
+                       "h":  129,
+                       "sourceX":  1011,
+                       "sourceY":  55,
+                       "file":  "frog_frame_04.png"
+                   },
+                   {
+                       "name":  "frog_frame_05",
+                       "x":  18,
+                       "y":  183,
+                       "w":  216,
+                       "h":  146,
+                       "sourceX":  86,
+                       "sourceY":  214,
+                       "file":  "frog_frame_05.png"
+                   },
+                   {
+                       "name":  "frog_frame_06",
+                       "x":  252,
+                       "y":  183,
+                       "w":  247,
+                       "h":  152,
+                       "sourceX":  366,
+                       "sourceY":  211,
+                       "file":  "frog_frame_06.png"
+                   },
+                   {
+                       "name":  "frog_frame_07",
+                       "x":  517,
+                       "y":  183,
+                       "w":  264,
+                       "h":  165,
+                       "sourceX":  664,
+                       "sourceY":  200,
+                       "file":  "frog_frame_07.png"
+                   },
+                   {
+                       "name":  "frog_frame_08",
+                       "x":  18,
+                       "y":  366,
+                       "w":  288,
+                       "h":  174,
+                       "sourceX":  951,
+                       "sourceY":  190,
+                       "file":  "frog_frame_08.png"
+                   },
+                   {
+                       "name":  "frog_frame_09",
+                       "x":  324,
+                       "y":  366,
+                       "w":  268,
+                       "h":  173,
+                       "sourceX":  41,
+                       "sourceY":  363,
+                       "file":  "frog_frame_09.png"
+                   },
+                   {
+                       "name":  "frog_frame_10",
+                       "x":  610,
+                       "y":  366,
+                       "w":  244,
+                       "h":  137,
+                       "sourceX":  366,
+                       "sourceY":  387,
+                       "file":  "frog_frame_10.png"
+                   },
+                   {
+                       "name":  "frog_frame_11",
+                       "x":  18,
+                       "y":  558,
+                       "w":  228,
+                       "h":  141,
+                       "sourceX":  691,
+                       "sourceY":  392,
+                       "file":  "frog_frame_11.png"
+                   },
+                   {
+                       "name":  "frog_frame_12",
+                       "x":  264,
+                       "y":  558,
+                       "w":  230,
+                       "h":  122,
+                       "sourceX":  990,
+                       "sourceY":  411,
+                       "file":  "frog_frame_12.png"
+                   },
+                   {
+                       "name":  "frog_frame_13",
+                       "x":  512,
+                       "y":  558,
+                       "w":  238,
+                       "h":  131,
+                       "sourceX":  54,
+                       "sourceY":  565,
+                       "file":  "frog_frame_13.png"
+                   },
+                   {
+                       "name":  "frog_frame_14",
+                       "x":  768,
+                       "y":  558,
+                       "w":  228,
+                       "h":  127,
+                       "sourceX":  377,
+                       "sourceY":  569,
+                       "file":  "frog_frame_14.png"
+                   },
+                   {
+                       "name":  "frog_frame_15",
+                       "x":  18,
+                       "y":  717,
+                       "w":  219,
+                       "h":  135,
+                       "sourceX":  696,
+                       "sourceY":  561,
+                       "file":  "frog_frame_15.png"
+                   },
+                   {
+                       "name":  "frog_frame_16",
+                       "x":  255,
+                       "y":  717,
+                       "w":  219,
+                       "h":  143,
+                       "sourceX":  1001,
+                       "sourceY":  551,
+                       "file":  "frog_frame_16.png"
+                   }
+               ]
+}

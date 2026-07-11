@@ -1,0 +1,166 @@
+﻿{
+    "image":  "dung_beetle-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "dung_beetle_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  279,
+                       "h":  137,
+                       "sourceX":  43,
+                       "sourceY":  47,
+                       "file":  "dung_beetle_frame_01.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_02",
+                       "x":  315,
+                       "y":  18,
+                       "w":  241,
+                       "h":  139,
+                       "sourceX":  377,
+                       "sourceY":  45,
+                       "file":  "dung_beetle_frame_02.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_03",
+                       "x":  574,
+                       "y":  18,
+                       "w":  240,
+                       "h":  139,
+                       "sourceX":  692,
+                       "sourceY":  45,
+                       "file":  "dung_beetle_frame_03.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_04",
+                       "x":  18,
+                       "y":  175,
+                       "w":  246,
+                       "h":  145,
+                       "sourceX":  992,
+                       "sourceY":  40,
+                       "file":  "dung_beetle_frame_04.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_05",
+                       "x":  282,
+                       "y":  175,
+                       "w":  238,
+                       "h":  142,
+                       "sourceX":  72,
+                       "sourceY":  216,
+                       "file":  "dung_beetle_frame_05.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_06",
+                       "x":  538,
+                       "y":  175,
+                       "w":  251,
+                       "h":  139,
+                       "sourceX":  365,
+                       "sourceY":  219,
+                       "file":  "dung_beetle_frame_06.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_07",
+                       "x":  18,
+                       "y":  338,
+                       "w":  276,
+                       "h":  140,
+                       "sourceX":  660,
+                       "sourceY":  219,
+                       "file":  "dung_beetle_frame_07.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_08",
+                       "x":  312,
+                       "y":  338,
+                       "w":  262,
+                       "h":  148,
+                       "sourceX":  978,
+                       "sourceY":  212,
+                       "file":  "dung_beetle_frame_08.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_09",
+                       "x":  592,
+                       "y":  338,
+                       "w":  246,
+                       "h":  143,
+                       "sourceX":  61,
+                       "sourceY":  384,
+                       "file":  "dung_beetle_frame_09.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_10",
+                       "x":  18,
+                       "y":  504,
+                       "w":  238,
+                       "h":  145,
+                       "sourceX":  376,
+                       "sourceY":  384,
+                       "file":  "dung_beetle_frame_10.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_11",
+                       "x":  274,
+                       "y":  504,
+                       "w":  238,
+                       "h":  153,
+                       "sourceX":  690,
+                       "sourceY":  377,
+                       "file":  "dung_beetle_frame_11.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_12",
+                       "x":  530,
+                       "y":  504,
+                       "w":  242,
+                       "h":  145,
+                       "sourceX":  984,
+                       "sourceY":  383,
+                       "file":  "dung_beetle_frame_12.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_13",
+                       "x":  18,
+                       "y":  675,
+                       "w":  251,
+                       "h":  151,
+                       "sourceX":  45,
+                       "sourceY":  544,
+                       "file":  "dung_beetle_frame_13.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_14",
+                       "x":  287,
+                       "y":  675,
+                       "w":  259,
+                       "h":  154,
+                       "sourceX":  352,
+                       "sourceY":  542,
+                       "file":  "dung_beetle_frame_14.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_15",
+                       "x":  564,
+                       "y":  675,
+                       "w":  258,
+                       "h":  152,
+                       "sourceX":  669,
+                       "sourceY":  545,
+                       "file":  "dung_beetle_frame_15.png"
+                   },
+                   {
+                       "name":  "dung_beetle_frame_16",
+                       "x":  18,
+                       "y":  847,
+                       "w":  261,
+                       "h":  153,
+                       "sourceX":  966,
+                       "sourceY":  543,
+                       "file":  "dung_beetle_frame_16.png"
+                   }
+               ]
+}

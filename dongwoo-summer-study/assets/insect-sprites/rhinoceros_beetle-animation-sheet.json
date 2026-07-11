@@ -1,0 +1,166 @@
+﻿{
+    "image":  "rhinoceros_beetle-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "rhinoceros_beetle_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  154,
+                       "h":  181,
+                       "sourceX":  97,
+                       "sourceY":  25,
+                       "file":  "rhinoceros_beetle_frame_01.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_02",
+                       "x":  190,
+                       "y":  18,
+                       "w":  199,
+                       "h":  134,
+                       "sourceX":  387,
+                       "sourceY":  55,
+                       "file":  "rhinoceros_beetle_frame_02.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_03",
+                       "x":  407,
+                       "y":  18,
+                       "w":  205,
+                       "h":  133,
+                       "sourceX":  698,
+                       "sourceY":  54,
+                       "file":  "rhinoceros_beetle_frame_03.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_04",
+                       "x":  630,
+                       "y":  18,
+                       "w":  218,
+                       "h":  143,
+                       "sourceX":  1000,
+                       "sourceY":  44,
+                       "file":  "rhinoceros_beetle_frame_04.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_05",
+                       "x":  18,
+                       "y":  217,
+                       "w":  246,
+                       "h":  188,
+                       "sourceX":  46,
+                       "sourceY":  200,
+                       "file":  "rhinoceros_beetle_frame_05.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_06",
+                       "x":  282,
+                       "y":  217,
+                       "w":  242,
+                       "h":  174,
+                       "sourceX":  360,
+                       "sourceY":  206,
+                       "file":  "rhinoceros_beetle_frame_06.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_07",
+                       "x":  542,
+                       "y":  217,
+                       "w":  229,
+                       "h":  162,
+                       "sourceX":  684,
+                       "sourceY":  206,
+                       "file":  "rhinoceros_beetle_frame_07.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_08",
+                       "x":  18,
+                       "y":  423,
+                       "w":  232,
+                       "h":  148,
+                       "sourceX":  998,
+                       "sourceY":  215,
+                       "file":  "rhinoceros_beetle_frame_08.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_09",
+                       "x":  268,
+                       "y":  423,
+                       "w":  235,
+                       "h":  158,
+                       "sourceX":  43,
+                       "sourceY":  373,
+                       "file":  "rhinoceros_beetle_frame_09.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_10",
+                       "x":  521,
+                       "y":  423,
+                       "w":  225,
+                       "h":  145,
+                       "sourceX":  370,
+                       "sourceY":  386,
+                       "file":  "rhinoceros_beetle_frame_10.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_11",
+                       "x":  764,
+                       "y":  423,
+                       "w":  222,
+                       "h":  143,
+                       "sourceX":  685,
+                       "sourceY":  389,
+                       "file":  "rhinoceros_beetle_frame_11.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_12",
+                       "x":  18,
+                       "y":  599,
+                       "w":  222,
+                       "h":  143,
+                       "sourceX":  1002,
+                       "sourceY":  389,
+                       "file":  "rhinoceros_beetle_frame_12.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_13",
+                       "x":  258,
+                       "y":  599,
+                       "w":  229,
+                       "h":  150,
+                       "sourceX":  42,
+                       "sourceY":  537,
+                       "file":  "rhinoceros_beetle_frame_13.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_14",
+                       "x":  505,
+                       "y":  599,
+                       "w":  198,
+                       "h":  134,
+                       "sourceX":  390,
+                       "sourceY":  550,
+                       "file":  "rhinoceros_beetle_frame_14.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_15",
+                       "x":  721,
+                       "y":  599,
+                       "w":  222,
+                       "h":  161,
+                       "sourceX":  698,
+                       "sourceY":  535,
+                       "file":  "rhinoceros_beetle_frame_15.png"
+                   },
+                   {
+                       "name":  "rhinoceros_beetle_frame_16",
+                       "x":  18,
+                       "y":  778,
+                       "w":  295,
+                       "h":  170,
+                       "sourceX":  975,
+                       "sourceY":  526,
+                       "file":  "rhinoceros_beetle_frame_16.png"
+                   }
+               ]
+}

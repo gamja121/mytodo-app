@@ -1,0 +1,166 @@
+﻿{
+    "image":  "mantis-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "mantis_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  110,
+                       "h":  212,
+                       "sourceX":  125,
+                       "sourceY":  6,
+                       "file":  "mantis_frame_01.png"
+                   },
+                   {
+                       "name":  "mantis_frame_02",
+                       "x":  146,
+                       "y":  18,
+                       "w":  216,
+                       "h":  141,
+                       "sourceX":  393,
+                       "sourceY":  37,
+                       "file":  "mantis_frame_02.png"
+                   },
+                   {
+                       "name":  "mantis_frame_03",
+                       "x":  380,
+                       "y":  18,
+                       "w":  205,
+                       "h":  152,
+                       "sourceX":  722,
+                       "sourceY":  32,
+                       "file":  "mantis_frame_03.png"
+                   },
+                   {
+                       "name":  "mantis_frame_04",
+                       "x":  603,
+                       "y":  18,
+                       "w":  204,
+                       "h":  168,
+                       "sourceX":  1022,
+                       "sourceY":  19,
+                       "file":  "mantis_frame_04.png"
+                   },
+                   {
+                       "name":  "mantis_frame_05",
+                       "x":  18,
+                       "y":  248,
+                       "w":  218,
+                       "h":  195,
+                       "sourceX":  82,
+                       "sourceY":  193,
+                       "file":  "mantis_frame_05.png"
+                   },
+                   {
+                       "name":  "mantis_frame_06",
+                       "x":  254,
+                       "y":  248,
+                       "w":  239,
+                       "h":  171,
+                       "sourceX":  373,
+                       "sourceY":  196,
+                       "file":  "mantis_frame_06.png"
+                   },
+                   {
+                       "name":  "mantis_frame_07",
+                       "x":  511,
+                       "y":  248,
+                       "w":  223,
+                       "h":  166,
+                       "sourceX":  705,
+                       "sourceY":  202,
+                       "file":  "mantis_frame_07.png"
+                   },
+                   {
+                       "name":  "mantis_frame_08",
+                       "x":  752,
+                       "y":  248,
+                       "w":  214,
+                       "h":  147,
+                       "sourceX":  1019,
+                       "sourceY":  215,
+                       "file":  "mantis_frame_08.png"
+                   },
+                   {
+                       "name":  "mantis_frame_09",
+                       "x":  18,
+                       "y":  461,
+                       "w":  242,
+                       "h":  185,
+                       "sourceX":  55,
+                       "sourceY":  366,
+                       "file":  "mantis_frame_09.png"
+                   },
+                   {
+                       "name":  "mantis_frame_10",
+                       "x":  278,
+                       "y":  461,
+                       "w":  223,
+                       "h":  160,
+                       "sourceX":  387,
+                       "sourceY":  371,
+                       "file":  "mantis_frame_10.png"
+                   },
+                   {
+                       "name":  "mantis_frame_11",
+                       "x":  519,
+                       "y":  461,
+                       "w":  203,
+                       "h":  152,
+                       "sourceX":  720,
+                       "sourceY":  378,
+                       "file":  "mantis_frame_11.png"
+                   },
+                   {
+                       "name":  "mantis_frame_12",
+                       "x":  740,
+                       "y":  461,
+                       "w":  231,
+                       "h":  166,
+                       "sourceX":  1004,
+                       "sourceY":  365,
+                       "file":  "mantis_frame_12.png"
+                   },
+                   {
+                       "name":  "mantis_frame_13",
+                       "x":  18,
+                       "y":  664,
+                       "w":  243,
+                       "h":  153,
+                       "sourceX":  44,
+                       "sourceY":  532,
+                       "file":  "mantis_frame_13.png"
+                   },
+                   {
+                       "name":  "mantis_frame_14",
+                       "x":  279,
+                       "y":  664,
+                       "w":  293,
+                       "h":  170,
+                       "sourceX":  351,
+                       "sourceY":  528,
+                       "file":  "mantis_frame_14.png"
+                   },
+                   {
+                       "name":  "mantis_frame_15",
+                       "x":  590,
+                       "y":  664,
+                       "w":  267,
+                       "h":  165,
+                       "sourceX":  684,
+                       "sourceY":  533,
+                       "file":  "mantis_frame_15.png"
+                   },
+                   {
+                       "name":  "mantis_frame_16",
+                       "x":  18,
+                       "y":  852,
+                       "w":  220,
+                       "h":  154,
+                       "sourceX":  1014,
+                       "sourceY":  539,
+                       "file":  "mantis_frame_16.png"
+                   }
+               ]
+}

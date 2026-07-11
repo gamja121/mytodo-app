@@ -1,0 +1,123 @@
+﻿{
+    "image":  "collection-jar-sheet.png",
+    "frameCount":  8,
+    "cellWidth":  256,
+    "cellHeight":  320,
+    "frames":  [
+                   {
+                       "name":  "collection_jar_00",
+                       "x":  0,
+                       "y":  0,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_00.png",
+                       "collected":  0,
+                       "insects":  {
+
+                                   }
+                   },
+                   {
+                       "name":  "collection_jar_01",
+                       "x":  256,
+                       "y":  0,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_01.png",
+                       "collected":  1,
+                       "insects":  "butterfly"
+                   },
+                   {
+                       "name":  "collection_jar_02",
+                       "x":  512,
+                       "y":  0,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_02.png",
+                       "collected":  2,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly"
+                                   ]
+                   },
+                   {
+                       "name":  "collection_jar_03",
+                       "x":  768,
+                       "y":  0,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_03.png",
+                       "collected":  3,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly",
+                                       "ladybug"
+                                   ]
+                   },
+                   {
+                       "name":  "collection_jar_04",
+                       "x":  0,
+                       "y":  320,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_04.png",
+                       "collected":  4,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly",
+                                       "ladybug",
+                                       "rhinoceros_beetle"
+                                   ]
+                   },
+                   {
+                       "name":  "collection_jar_05",
+                       "x":  256,
+                       "y":  320,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_05.png",
+                       "collected":  5,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly",
+                                       "ladybug",
+                                       "rhinoceros_beetle",
+                                       "stag_beetle"
+                                   ]
+                   },
+                   {
+                       "name":  "collection_jar_06",
+                       "x":  512,
+                       "y":  320,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_06.png",
+                       "collected":  6,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly",
+                                       "ladybug",
+                                       "rhinoceros_beetle",
+                                       "stag_beetle",
+                                       "cicada"
+                                   ]
+                   },
+                   {
+                       "name":  "collection_jar_07",
+                       "x":  768,
+                       "y":  320,
+                       "w":  256,
+                       "h":  320,
+                       "file":  "collection_jar_07.png",
+                       "collected":  7,
+                       "insects":  [
+                                       "butterfly",
+                                       "dragonfly",
+                                       "ladybug",
+                                       "rhinoceros_beetle",
+                                       "stag_beetle",
+                                       "cicada",
+                                       "mantis"
+                                   ]
+                   }
+               ]
+}

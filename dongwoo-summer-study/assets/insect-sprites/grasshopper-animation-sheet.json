@@ -1,0 +1,166 @@
+﻿{
+    "image":  "grasshopper-animation-sheet.png",
+    "frameCount":  16,
+    "frames":  [
+                   {
+                       "name":  "grasshopper_frame_01",
+                       "x":  18,
+                       "y":  18,
+                       "w":  133,
+                       "h":  217,
+                       "sourceX":  106,
+                       "sourceY":  3,
+                       "file":  "grasshopper_frame_01.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_02",
+                       "x":  169,
+                       "y":  18,
+                       "w":  257,
+                       "h":  168,
+                       "sourceX":  988,
+                       "sourceY":  24,
+                       "file":  "grasshopper_frame_02.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_03",
+                       "x":  444,
+                       "y":  18,
+                       "w":  236,
+                       "h":  123,
+                       "sourceX":  380,
+                       "sourceY":  61,
+                       "file":  "grasshopper_frame_03.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_04",
+                       "x":  698,
+                       "y":  18,
+                       "w":  232,
+                       "h":  130,
+                       "sourceX":  702,
+                       "sourceY":  59,
+                       "file":  "grasshopper_frame_04.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_05",
+                       "x":  18,
+                       "y":  253,
+                       "w":  248,
+                       "h":  181,
+                       "sourceX":  58,
+                       "sourceY":  210,
+                       "file":  "grasshopper_frame_05.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_06",
+                       "x":  284,
+                       "y":  253,
+                       "w":  240,
+                       "h":  177,
+                       "sourceX":  371,
+                       "sourceY":  190,
+                       "file":  "grasshopper_frame_06.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_07",
+                       "x":  542,
+                       "y":  253,
+                       "w":  234,
+                       "h":  162,
+                       "sourceX":  699,
+                       "sourceY":  205,
+                       "file":  "grasshopper_frame_07.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_08",
+                       "x":  18,
+                       "y":  452,
+                       "w":  227,
+                       "h":  140,
+                       "sourceX":  1016,
+                       "sourceY":  222,
+                       "file":  "grasshopper_frame_08.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_09",
+                       "x":  263,
+                       "y":  452,
+                       "w":  265,
+                       "h":  183,
+                       "sourceX":  44,
+                       "sourceY":  364,
+                       "file":  "grasshopper_frame_09.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_10",
+                       "x":  546,
+                       "y":  452,
+                       "w":  216,
+                       "h":  158,
+                       "sourceX":  397,
+                       "sourceY":  373,
+                       "file":  "grasshopper_frame_10.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_11",
+                       "x":  780,
+                       "y":  452,
+                       "w":  212,
+                       "h":  153,
+                       "sourceX":  715,
+                       "sourceY":  379,
+                       "file":  "grasshopper_frame_11.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_12",
+                       "x":  18,
+                       "y":  653,
+                       "w":  226,
+                       "h":  160,
+                       "sourceX":  1005,
+                       "sourceY":  372,
+                       "file":  "grasshopper_frame_12.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_13",
+                       "x":  262,
+                       "y":  653,
+                       "w":  224,
+                       "h":  159,
+                       "sourceX":  44,
+                       "sourceY":  529,
+                       "file":  "grasshopper_frame_13.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_14",
+                       "x":  504,
+                       "y":  653,
+                       "w":  290,
+                       "h":  170,
+                       "sourceX":  352,
+                       "sourceY":  528,
+                       "file":  "grasshopper_frame_14.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_15",
+                       "x":  18,
+                       "y":  841,
+                       "w":  254,
+                       "h":  169,
+                       "sourceX":  690,
+                       "sourceY":  529,
+                       "file":  "grasshopper_frame_15.png"
+                   },
+                   {
+                       "name":  "grasshopper_frame_16",
+                       "x":  290,
+                       "y":  841,
+                       "w":  240,
+                       "h":  142,
+                       "sourceX":  988,
+                       "sourceY":  552,
+                       "file":  "grasshopper_frame_16.png"
+                   }
+               ]
+}
