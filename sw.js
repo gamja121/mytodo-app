@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v4';
+const CACHE_NAME = 'ag-pwa-cache-v6';
 const PRECACHE_ASSETS = [
     './',
     './index.html',

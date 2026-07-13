@@ -20,8 +20,8 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/novel.css">
-    <script src="/novel.js" defer></script>
+    <link rel="stylesheet" href="./novel.css">
+    <script src="./novel.js" defer></script>
 
     <style>
         :root {
@@ -369,7 +369,7 @@
     <div class="tabs-nav" id="tabs-nav" style="display:none;">
         <button class="tab-btn active" onclick="switchTab('schedule')">📋 스케줄</button>
         <button class="tab-btn" onclick="switchTab('chat')">💬 AI 비서</button>
-        <button class="tab-btn" onclick="switchTab('novel')">✍ 소설 집필</button>
+        <button id="novel-tab-btn" class="tab-btn" onclick="switchTab('novel')">✍ 소설 집필</button>
         <button class="pw-change-btn" onclick="promptPasswordChange()">🔒 비번 변경</button>
     </div>
 
@@ -521,16 +521,12 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260711-novel-pwa-v1';
+        const APP_BUILD_ID = '20260712-novel-pwa-v3';
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 
         async function repairPwaCache() {
             try {
-                if ('caches' in window) {
-                    const keys = await caches.keys();
-                    await Promise.all(keys.map(key => caches.delete(key)));
-                }
                 if ('serviceWorker' in navigator) {
                     const registrations = await navigator.serviceWorker.getRegistrations();
                     await Promise.all(registrations.map(reg => reg.update().catch(() => null)));
@@ -606,7 +602,10 @@
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('./sw.js?build=' + APP_BUILD_ID).catch(err => console.log('SW setup failed', err));
                 navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    window.location.reload();
+                    if (!sessionStorage.getItem('ag_sw_reloaded_' + APP_BUILD_ID)) {
+                        sessionStorage.setItem('ag_sw_reloaded_' + APP_BUILD_ID, '1');
+                        window.location.reload();
+                    }
                 });
             }
 
