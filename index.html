@@ -6,22 +6,22 @@
     <title>Antigravity Briefing</title>
     
     <!-- PWA Settings -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0A192F">
-    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
     
     <!-- iOS / Apple settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Antigravity">
-    <link rel="apple-touch-icon" href="/icon.svg">
+    <link rel="apple-touch-icon" href="./icon.svg">
 
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/novel.css">
-    <script src="/novel.js?v=20260715-replan-button-v1" defer></script>
+    <link rel="stylesheet" href="./novel.css?v=20260715-pages-path-v1">
+    <script src="./novel.js?v=20260715-pages-path-v1" defer></script>
 
     <style>
         :root {
@@ -525,7 +525,7 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260715-novel-replan-button-v1';
+        const APP_BUILD_ID = '20260715-pages-path-v1';
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v12-novel-replan-button';
+const CACHE_NAME = 'ag-pwa-cache-v13-pages-relative-assets';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
