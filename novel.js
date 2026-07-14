@@ -1,4 +1,5 @@
 let currentNovelProjectId = "";
+let currentNovelTitle = "";
 let activeNovelJobId = "";
 let novelPollTimer = null;
 
@@ -35,10 +36,12 @@ function hideAllJobButtons() {
 
 function showNoProjectDetails() {
     currentNovelProjectId = "";
+    currentNovelTitle = "";
     novelEl("novel-details-title").textContent = "📖 기획된 소설이 없습니다";
     novelEl("novel-details-genre").textContent = "새 소설 기획을 눌러 시작하세요.";
     novelEl("novel-chapters-list").replaceChildren();
     hideAllJobButtons();
+    if (novelEl("btn-novel-delete")) novelEl("btn-novel-delete").style.display = "none";
 }
 
 async function loadNovelProjects() {
@@ -46,9 +49,10 @@ async function loadNovelProjects() {
     if (!select) return;
     select.replaceChildren(new Option("소설 목록을 불러오는 중…", ""));
     try {
-        const [{ projects = [] }, active] = await Promise.all([
+        const [{ projects = [] }, active, { jobs = [] }] = await Promise.all([
             novelRequest("/api/novel/projects"),
-            novelRequest("/api/novel/active")
+            novelRequest("/api/novel/active"),
+            novelRequest("/api/novel/jobs")
         ]);
         select.replaceChildren();
         if (!projects.length) {
@@ -61,6 +65,15 @@ async function loadNovelProjects() {
         });
         select.value = active.project_id || projects[0].project_id;
         await loadActiveProjectDetails(false);
+        const activeCreateJob = jobs.find(job =>
+            job.job_type === "create" &&
+            ["queued", "planning", "pause_requested", "paused", "cancel_requested", "interrupted"].includes(job.status)
+        );
+        if (activeCreateJob) {
+            activeNovelJobId = activeCreateJob.job_id;
+            renderNovelJob(activeCreateJob);
+            if (!["paused", "interrupted"].includes(activeCreateJob.status)) scheduleNovelPoll();
+        }
     } catch (error) {
         novelMessage(`소설 목록 오류: ${error.message}`, "error");
     }
@@ -93,6 +106,8 @@ async function loadActiveProjectDetails(setActive = true) {
             });
         }
         const config = await novelRequest(`/api/novel/status?project_id=${encodeURIComponent(projectId)}`);
+        currentNovelTitle = config.title || "무제";
+        if (novelEl("btn-novel-delete")) novelEl("btn-novel-delete").style.display = "inline-flex";
         novelEl("novel-details-title").textContent = `📖 ${config.title || "제목 없음"}`;
         novelEl("novel-details-genre").textContent = `장르: ${config.genre || "일반"} · 완료 ${config.completed_chapters || 0}/${config.total_chapters || 0}`;
         const list = novelEl("novel-chapters-list");
@@ -112,7 +127,8 @@ async function loadActiveProjectDetails(setActive = true) {
         }
 
         const { jobs = [] } = await novelRequest("/api/novel/jobs");
-        const job = jobs.find(item => item.project_id === projectId) || jobs[0];
+        const visibleJobStates = new Set(["queued", "planning", "awaiting_approval", "event_graph_audit", "pilot_writing", "pilot_audit", "writing", "pause_requested", "paused", "cancel_requested", "interrupted"]);
+        const job = jobs.find(item => item.project_id === projectId && visibleJobStates.has(item.status));
         if (job) {
             activeNovelJobId = job.job_id;
             renderNovelJob(job);
@@ -121,11 +137,20 @@ async function loadActiveProjectDetails(setActive = true) {
             if (config.can_write) {
                 novelEl("btn-novel-write-next").style.display = "inline-flex";
                 novelEl("btn-novel-write-all").style.display = "inline-flex";
+                novelEl("btn-novel-write-all").textContent = "전체 집필 시작";
                 novelMessage("집필 대기 중");
+            } else if (config.creation_ready && config.planning_status === "project_ready") {
+                novelEl("btn-novel-write-next").style.display = "none";
+                novelEl("btn-novel-write-all").style.display = "inline-flex";
+                novelEl("btn-novel-write-all").textContent = "기획 확장 시작";
+                novelMessage("1차 기획 완료 · 1/5 및 1/3 줄거리 확장을 시작할 수 있습니다.");
             } else {
                 novelEl("btn-novel-write-next").style.display = "none";
                 novelEl("btn-novel-write-all").style.display = "none";
-                const errorsStr = (config.planning_errors || []).join("\n· ");
+                const allErrors = config.planning_errors || [];
+                const shownErrors = allErrors.slice(0, 6);
+                const remainder = Math.max(0, allErrors.length - shownErrors.length);
+                const errorsStr = shownErrors.join("\n· ") + (remainder ? `\n· 외 ${remainder}개` : "");
                 novelMessage(`[기획 차단됨] 검증 실패:\n· ${errorsStr}`, "error");
             }
         } else {
@@ -171,6 +196,27 @@ async function pollNovelJob() {
         const job = await novelRequest(`/api/novel/job?job_id=${encodeURIComponent(activeNovelJobId)}`);
         renderNovelJob(job);
         const terminal = ["completed", "completed_with_review", "cancelled", "planning_blocked", "pilot_rejected", "failed", "project_ready"].includes(job.status);
+        if (terminal) {
+            activeNovelJobId = "";
+            clearTimeout(novelPollTimer);
+            const projectId = job.result?.project_id || job.project_id || "";
+            if (projectId) {
+                await novelRequest("/api/novel/set_active", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ project_id: projectId })
+                });
+                await loadNovelProjects();
+            }
+            if (["planning_blocked", "pilot_rejected", "failed"].includes(job.status)) {
+                const errors = job.result?.errors || [];
+                const shown = errors.slice(0, 6);
+                const remainder = Math.max(0, errors.length - shown.length);
+                const detail = shown.length ? `\n· ${shown.join("\n· ")}${remainder ? `\n· 외 ${remainder}개` : ""}` : "";
+                novelMessage(`${job.status === "planning_blocked" ? "기획 검증 실패" : "작업 실패"}${detail}`, "error");
+            }
+            return;
+        }
         if (!terminal && job.status !== "awaiting_approval" && job.status !== "paused" && job.status !== "interrupted") {
             scheduleNovelPoll();
         }
@@ -196,7 +242,7 @@ function renderNovelJob(job) {
         cancel_requested: "취소 요청 처리 중", cancelled: "취소됨", interrupted: "작업 중단됨",
         completed: "완료", completed_with_review: "완료 · 검토 항목 있음",
         event_graph_audit: "사건 기획 검증 중", pilot_writing: "3화 시험 집필 중", pilot_audit: "시험 검토 중",
-        planning_blocked: "기획 차단됨", pilot_rejected: "Pilot 검증 실패", failed: "작업 실패"
+        planning_blocked: "기획 차단됨", pilot_rejected: "Pilot 검증 실패", project_ready: "1차 기획 완료", failed: "작업 실패"
     };
     novelMessage(statusNames[job.status] || job.status, (job.status === "interrupted" || job.status === "failed" || job.status === "planning_blocked" || job.status === "pilot_rejected") ? "error" : "info");
     if (["planning", "writing", "event_graph_audit", "pilot_writing", "pilot_audit"].includes(job.status)) {
@@ -210,7 +256,6 @@ function renderNovelJob(job) {
     } else if (["completed", "completed_with_review", "cancelled", "failed", "planning_blocked", "pilot_rejected", "project_ready"].includes(job.status)) {
         activeNovelJobId = "";
         clearTimeout(novelPollTimer);
-        setTimeout(() => loadActiveProjectDetails(false), 500);
         if (job.status === "completed" || job.status === "completed_with_review") {
             setTimeout(async () => {
                 try {
@@ -301,6 +346,34 @@ async function submitNewProject() {
         scheduleNovelPoll(300);
     } catch (error) {
         novelMessage(`새 소설 생성 실패: ${error.message}`, "error");
+    }
+}
+
+async function deleteCurrentNovelProject() {
+    const projectId = currentNovelProjectId || novelEl("novel-project-select")?.value || "";
+    if (!projectId || !currentNovelTitle) return novelMessage("삭제할 소설을 먼저 선택해 주세요.", "error");
+    const confirmed = window.confirm(
+        `소설 《${currentNovelTitle}》을 영구 삭제할까요?\n\n설정, 초고, 품질 보고서가 함께 삭제되며 되돌릴 수 없습니다.`
+    );
+    if (!confirmed) return;
+    const button = novelEl("btn-novel-delete");
+    if (button) button.disabled = true;
+    novelMessage(`《${currentNovelTitle}》 삭제 중…`);
+    try {
+        const data = await novelRequest("/api/novel/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ project_id: projectId, confirm_title: currentNovelTitle })
+        });
+        const deletedTitle = data.result?.title || currentNovelTitle;
+        currentNovelProjectId = "";
+        currentNovelTitle = "";
+        await loadNovelProjects();
+        novelMessage(`《${deletedTitle}》 삭제 완료`, "success");
+    } catch (error) {
+        novelMessage(`소설 삭제 실패: ${error.message}`, "error");
+    } finally {
+        if (button) button.disabled = false;
     }
 }
 
