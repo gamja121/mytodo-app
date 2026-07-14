@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v8-novel-project-delete';
+const CACHE_NAME = 'ag-pwa-cache-v9-novel-project-delete-fix2';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
