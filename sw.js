@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v10-temporal-todo';
+const CACHE_NAME = 'ag-pwa-cache-v11-novel-job-controls';
 const PRECACHE_ASSETS = [
     './',
     './index.html',

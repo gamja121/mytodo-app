@@ -178,6 +178,16 @@ async function startWritingJob(jobType) {
         });
         activeNovelJobId = data.job.job_id;
         renderNovelJob(data.job);
+        if (!data.created) {
+            novelMessage(
+                data.reason === "active_job_exists"
+                    ? "집필을 새로 시작하지 않았습니다. 이미 진행 중인 작업 상태를 표시합니다."
+                    : "같은 집필 요청이 이미 접수되어 기존 작업을 계속 표시합니다.",
+                "warning"
+            );
+        } else {
+            novelMessage("집필 요청 접수 완료 · 백그라운드 작업을 시작했습니다.", "success");
+        }
         scheduleNovelPoll(200);
     } catch (error) {
         novelMessage(`집필 시작 실패: ${error.message}`, "error");
@@ -214,6 +224,10 @@ async function pollNovelJob() {
                 const remainder = Math.max(0, errors.length - shown.length);
                 const detail = shown.length ? `\n· ${shown.join("\n· ")}${remainder ? `\n· 외 ${remainder}개` : ""}` : "";
                 novelMessage(`${job.status === "planning_blocked" ? "기획 검증 실패" : "작업 실패"}${detail}`, "error");
+            } else if (job.status === "project_ready") {
+                novelMessage("새 소설 기획 완료 · 소설 목록에 추가되었습니다.", "success");
+            } else if (["completed", "completed_with_review"].includes(job.status)) {
+                novelMessage("집필 작업이 완료되었습니다.", "success");
             }
             return;
         }
@@ -244,11 +258,18 @@ function renderNovelJob(job) {
         event_graph_audit: "사건 기획 검증 중", pilot_writing: "3화 시험 집필 중", pilot_audit: "시험 검토 중",
         planning_blocked: "기획 차단됨", pilot_rejected: "Pilot 검증 실패", project_ready: "1차 기획 완료", failed: "작업 실패"
     };
-    novelMessage(statusNames[job.status] || job.status, (job.status === "interrupted" || job.status === "failed" || job.status === "planning_blocked" || job.status === "pilot_rejected") ? "error" : "info");
+    const successState = ["project_ready", "completed", "completed_with_review"].includes(job.status);
+    novelMessage(
+        statusNames[job.status] || job.status,
+        (job.status === "interrupted" || job.status === "failed" || job.status === "planning_blocked" || job.status === "pilot_rejected")
+            ? "error"
+            : (successState ? "success" : "info")
+    );
     if (["planning", "writing", "event_graph_audit", "pilot_writing", "pilot_audit"].includes(job.status)) {
         novelEl("btn-novel-pause").style.display = "inline-flex";
         novelEl("btn-novel-cancel").style.display = "inline-flex";
-    } else if (job.status === "paused" || job.status === "interrupted") {
+    } else if (job.status === "pause_requested" || job.status === "paused" || job.status === "interrupted") {
+        novelEl("btn-novel-resume").textContent = job.status === "pause_requested" ? "계속 진행" : "작업 재개";
         novelEl("btn-novel-resume").style.display = "inline-flex";
         novelEl("btn-novel-cancel").style.display = "inline-flex";
     } else if (job.status === "awaiting_approval") {
@@ -286,6 +307,13 @@ async function controlActiveJob(action) {
             body: JSON.stringify({ job_id: activeNovelJobId })
         });
         renderNovelJob(data.job);
+        if (action === "pause") {
+            novelMessage("일시정지 요청 접수 · 현재 안전 단계가 끝나면 멈춥니다. '계속 진행'으로 취소할 수 있습니다.", "warning");
+        } else if (action === "resume") {
+            novelMessage("작업 재개 요청 접수 완료", "success");
+        } else if (action === "cancel") {
+            novelMessage("작업 취소 요청을 접수했습니다.", "warning");
+        }
         scheduleNovelPoll(500);
     } catch (error) {
         novelMessage(`작업 제어 실패: ${error.message}`, "error");
@@ -343,6 +371,16 @@ async function submitNewProject() {
         });
         activeNovelJobId = data.job.job_id;
         renderNovelJob(data.job);
+        if (!data.created) {
+            novelMessage(
+                data.reason === "active_job_exists"
+                    ? "새 소설 기획을 시작하지 않았습니다. 이미 진행 중인 작업을 먼저 재개하거나 취소해 주세요."
+                    : "동일한 새 소설 기획 요청이 이미 접수되어 기존 진행 상태를 표시합니다.",
+                "warning"
+            );
+        } else {
+            novelMessage(`《${title}》 기획 요청 접수 완료 · 백그라운드 생성 시작`, "success");
+        }
         scheduleNovelPoll(300);
     } catch (error) {
         novelMessage(`새 소설 생성 실패: ${error.message}`, "error");
