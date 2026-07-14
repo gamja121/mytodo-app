@@ -525,7 +525,7 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260714-novel-project-delete-fix2';
+        const APP_BUILD_ID = '20260715-temporal-todo-v1';
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 
@@ -1050,10 +1050,13 @@
                     let newQueue = [...queue];
                     for (let task of queue) {
                         let url = task.type === 'add' ? apiUrl('/api/todo') : apiUrl('/api/delete');
+                        const isAdd = task.type === 'add';
                         const response = await fetch(url, { 
                             method: 'POST', 
-                            headers: authHeaders(),
-                            body: task.text 
+                            headers: authHeaders(isAdd ? { 'Content-Type': 'application/json' } : {}),
+                            body: isAdd
+                                ? JSON.stringify({ text: task.text, created_at: task.created_at || null })
+                                : task.text
                         });
                         if (response.ok) {
                             newQueue = newQueue.filter(item => item.id !== task.id);

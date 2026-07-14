@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v9-novel-project-delete-fix2';
+const CACHE_NAME = 'ag-pwa-cache-v10-temporal-todo';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
