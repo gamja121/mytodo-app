@@ -30,8 +30,23 @@ async function novelRequest(path, options = {}) {
 }
 
 function hideAllJobButtons() {
-    ["btn-novel-write-next", "btn-novel-write-all", "btn-novel-pause", "btn-novel-resume", "btn-novel-cancel"]
+    ["btn-novel-write-next", "btn-novel-write-all", "btn-novel-pause", "btn-novel-resume", "btn-novel-cancel", "btn-novel-replan"]
         .forEach(id => { if (novelEl(id)) novelEl(id).style.display = "none"; });
+}
+
+function ensureNovelReplanButton() {
+    let button = novelEl("btn-novel-replan");
+    if (button) return button;
+    const deleteButton = novelEl("btn-novel-delete");
+    if (!deleteButton?.parentElement) return null;
+    button = document.createElement("button");
+    button.id = "btn-novel-replan";
+    button.className = "action-btn-primary";
+    button.textContent = "기획 보완 후 집필 준비";
+    button.style.cssText = "display:none;margin-top:8px;width:100%;";
+    button.addEventListener("click", startNovelReplan);
+    deleteButton.insertAdjacentElement("afterend", button);
+    return button;
 }
 
 function showNoProjectDetails() {
@@ -79,7 +94,7 @@ async function loadNovelProjects() {
     }
 }
 
-function chapterRow(chapter) {
+function chapterRow(chapter, projectBlocked = false) {
     const row = document.createElement("button");
     row.type = "button";
     row.className = `chapter-row ${chapter.completed ? "completed" : "pending"}`;
@@ -87,13 +102,16 @@ function chapterRow(chapter) {
     title.textContent = `제 ${chapter.chapter_num}화 · ${chapter.title || "제목 없음"}`;
     const badge = document.createElement("span");
     badge.className = `chapter-badge ${chapter.completed ? "completed" : "pending"}`;
-    badge.textContent = chapter.completed ? "집필 완료" : (chapter.write_status === "needs_review" ? "검토 필요" : "대기 중");
+    badge.textContent = chapter.completed
+        ? "집필 완료"
+        : (chapter.write_status === "needs_review" ? "검토 필요" : (projectBlocked ? "기획 보완 필요" : "대기 중"));
     row.append(title, badge);
     row.addEventListener("click", () => openChapterViewer(chapter.chapter_num));
     return row;
 }
 
 async function loadActiveProjectDetails(setActive = true) {
+    ensureNovelReplanButton();
     const projectId = novelEl("novel-project-select")?.value || "";
     currentNovelProjectId = projectId;
     if (!projectId) return showNoProjectDetails();
@@ -111,7 +129,8 @@ async function loadActiveProjectDetails(setActive = true) {
         novelEl("novel-details-title").textContent = `📖 ${config.title || "제목 없음"}`;
         novelEl("novel-details-genre").textContent = `장르: ${config.genre || "일반"} · 완료 ${config.completed_chapters || 0}/${config.total_chapters || 0}`;
         const list = novelEl("novel-chapters-list");
-        list.replaceChildren(...(config.chapters || []).map(chapterRow));
+        const projectBlocked = !config.can_write && !(config.creation_ready && config.planning_status === "project_ready");
+        list.replaceChildren(...(config.chapters || []).map(chapter => chapterRow(chapter, projectBlocked)));
         hideAllJobButtons();
 
         // Legacy Project Check (version < 4)
@@ -147,6 +166,8 @@ async function loadActiveProjectDetails(setActive = true) {
             } else {
                 novelEl("btn-novel-write-next").style.display = "none";
                 novelEl("btn-novel-write-all").style.display = "none";
+                novelEl("btn-novel-replan").style.display = "inline-flex";
+                novelEl("novel-progress-container").style.display = "block";
                 const allErrors = config.planning_errors || [];
                 const shownErrors = allErrors.slice(0, 6);
                 const remainder = Math.max(0, allErrors.length - shownErrors.length);
@@ -158,6 +179,30 @@ async function loadActiveProjectDetails(setActive = true) {
         }
     } catch (error) {
         novelMessage(`프로젝트 오류: ${error.message}`, "error");
+    }
+}
+
+async function startNovelReplan() {
+    if (!currentNovelProjectId) return novelMessage("먼저 소설을 선택해 주세요.", "error");
+    hideAllJobButtons();
+    novelEl("novel-progress-container").style.display = "block";
+    novelMessage("기획 보완 작업을 요청하는 중…", "info");
+    try {
+        const data = await novelRequest("/api/novel/replan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                project_id: currentNovelProjectId,
+                request_key: `${currentNovelProjectId}-replan-${Date.now()}`
+            })
+        });
+        activeNovelJobId = data.job.job_id;
+        renderNovelJob(data.job);
+        novelMessage(data.created ? "기획 보완을 시작했습니다." : "이미 진행 중인 작업을 표시합니다.", data.created ? "success" : "warning");
+        scheduleNovelPoll(300);
+    } catch (error) {
+        novelMessage(`기획 보완 시작 실패: ${error.message}`, "error");
+        await loadActiveProjectDetails(false);
     }
 }
 

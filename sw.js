@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v11-novel-job-controls';
+const CACHE_NAME = 'ag-pwa-cache-v12-novel-replan-button';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
