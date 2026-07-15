@@ -30,7 +30,8 @@ async function novelRequest(path, options = {}) {
 }
 
 function hideAllJobButtons() {
-    ["btn-novel-write-next", "btn-novel-write-all", "btn-novel-pause", "btn-novel-resume", "btn-novel-cancel", "btn-novel-replan"]
+    ["btn-novel-write-next", "btn-novel-write-all", "btn-novel-pause", "btn-novel-resume", "btn-novel-cancel", "btn-novel-replan",
+     "btn-outline-retry", "btn-outline-approve", "btn-outline-reject"]
         .forEach(id => { if (novelEl(id)) novelEl(id).style.display = "none"; });
 }
 
@@ -318,6 +319,9 @@ function renderNovelJob(job) {
         novelEl("btn-novel-resume").style.display = "inline-flex";
         novelEl("btn-novel-cancel").style.display = "inline-flex";
     } else if (job.status === "awaiting_approval") {
+        novelEl("btn-outline-retry").style.display = "inline-flex";
+        novelEl("btn-outline-approve").style.display = "inline-flex";
+        novelEl("btn-outline-reject").style.display = "inline-flex";
         showOutlineApprovalModal();
     } else if (["completed", "completed_with_review", "cancelled", "failed", "planning_blocked", "pilot_rejected", "project_ready"].includes(job.status)) {
         activeNovelJobId = "";
@@ -366,17 +370,35 @@ async function controlActiveJob(action) {
 }
 
 async function showOutlineApprovalModal() {
+    // Approval controls must remain usable even when the optional outline
+    // display request fails because of a brief mobile/network interruption.
+    novelEl("outline-approval-text").textContent = "상세 줄거리를 불러오는 중…";
+    novelEl("outline-approval-modal").style.display = "flex";
     try {
         const config = await novelRequest(`/api/novel/status?project_id=${encodeURIComponent(currentNovelProjectId)}`);
         const outline = typeof config.outline_3rd === "string" ? config.outline_3rd : (config.outline_3rd?.outline_text || "줄거리를 불러오지 못했습니다.");
         novelEl("outline-approval-text").textContent = outline;
-        novelEl("outline-approval-modal").style.display = "flex";
     } catch (error) {
-        novelMessage(`줄거리 표시 오류: ${error.message}`, "error");
+        novelEl("outline-approval-text").textContent =
+            `줄거리 내용을 불러오지 못했습니다 (${error.message}).\n\n` +
+            "아래 버튼은 계속 사용할 수 있습니다. 다시 불러오거나, 현재 생성된 기획을 승인하여 집필을 계속하거나, 작업을 취소하세요.";
+        novelMessage(`줄거리 표시 오류: ${error.message} · 아래 제어 버튼을 사용할 수 있습니다.`, "error");
     }
 }
 
+async function retryOutlineDisplay() {
+    if (!activeNovelJobId) {
+        novelMessage("승인 대기 중인 작업을 다시 선택해 주세요.", "error");
+        return;
+    }
+    await showOutlineApprovalModal();
+}
+
 async function respondToOutline(action) {
+    if (!activeNovelJobId) {
+        novelMessage("제어할 승인 대기 작업이 없습니다. 화면을 새로고침해 주세요.", "error");
+        return;
+    }
     novelEl("outline-approval-modal").style.display = "none";
     const endpoint = action === "approve" ? "approve" : "reject";
     try {

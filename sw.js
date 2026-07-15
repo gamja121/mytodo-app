@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v13-pages-relative-assets';
+const CACHE_NAME = 'ag-pwa-cache-v14-outline-controls';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
