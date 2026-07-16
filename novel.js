@@ -31,7 +31,7 @@ async function novelRequest(path, options = {}) {
 
 function hideAllJobButtons() {
     ["btn-novel-write-next", "btn-novel-write-all", "btn-novel-pause", "btn-novel-resume", "btn-novel-cancel", "btn-novel-replan",
-     "btn-novel-retry-review", "btn-outline-retry", "btn-outline-approve", "btn-outline-reject"]
+     "btn-novel-retry-review", "btn-novel-continue-review", "btn-outline-retry", "btn-outline-approve", "btn-outline-reject"]
         .forEach(id => { if (novelEl(id)) novelEl(id).style.display = "none"; });
 }
 
@@ -155,7 +155,8 @@ async function loadActiveProjectDetails(setActive = true) {
             scheduleNovelPoll();
         } else if ((config.chapters || []).some(chapter => chapter.write_status === "needs_review")) {
             novelEl("btn-novel-retry-review").style.display = "inline-flex";
-            novelMessage("이미 작성된 검토 필요 화가 있습니다. Pilot을 반복하지 않고 해당 화만 다시 집필할 수 있습니다.", "warning");
+            novelEl("btn-novel-continue-review").style.display = "inline-flex";
+            novelMessage("검토 필요 원고를 다시 쓰거나, 판정을 보존한 채 다음 화부터 계속할 수 있습니다.", "warning");
         } else if ((config.completed_chapters || 0) < (config.total_chapters || 0)) {
             if (config.can_write) {
                 novelEl("btn-novel-write-next").style.display = "inline-flex";
@@ -265,6 +266,31 @@ async function retryReviewChapter() {
         scheduleNovelPoll(300);
     } catch (error) {
         novelMessage(`검토 필요 화 재집필 실패: ${error.message}`, "error");
+        await loadActiveProjectDetails(false);
+    }
+}
+
+async function continueWithReview() {
+    if (!currentNovelProjectId) return novelMessage("먼저 소설을 선택해 주세요.", "error");
+    if (!window.confirm("검토 필요 판정을 그대로 보존하고 다음 미작성 화부터 전체 집필을 계속할까요?")) return;
+    hideAllJobButtons();
+    novelEl("novel-progress-container").style.display = "block";
+    novelMessage("검토 보류 승인 내용을 기록하고 다음 화 집필을 준비하는 중입니다.", "info");
+    try {
+        const data = await novelRequest("/api/novel/continue_with_review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                project_id: currentNovelProjectId,
+                request_key: `${currentNovelProjectId}-continue-review-${Date.now()}`
+            })
+        });
+        activeNovelJobId = data.job.job_id;
+        renderNovelJob(data.job);
+        novelMessage(`검토 필요 ${data.review_chapters.join(", ")}화는 보존하고 다음 미작성 화부터 계속합니다.`, "success");
+        scheduleNovelPoll(300);
+    } catch (error) {
+        novelMessage(`계속 집필 시작 실패: ${error.message}`, "error");
         await loadActiveProjectDetails(false);
     }
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ag-pwa-cache-v15-pilot-review-retry';
+const CACHE_NAME = 'ag-pwa-cache-v16-continue-with-review';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
