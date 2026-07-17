@@ -43,11 +43,22 @@ function ensureNovelReplanButton() {
     button = document.createElement("button");
     button.id = "btn-novel-replan";
     button.className = "action-btn-primary";
-    button.textContent = "기획 보완 후 집필 준비";
+    button.textContent = "기획 이어하기";
     button.style.cssText = "display:none;margin-top:8px;width:100%;";
     button.addEventListener("click", startNovelReplan);
     deleteButton.insertAdjacentElement("afterend", button);
     return button;
+}
+
+function showPlanningBlockedControls(config) {
+    const replanButton = ensureNovelReplanButton();
+    if (replanButton) replanButton.style.display = "inline-flex";
+    novelEl("novel-progress-container").style.display = "block";
+    const allErrors = config.planning_errors || [];
+    const shownErrors = allErrors.slice(0, 6);
+    const remainder = Math.max(0, allErrors.length - shownErrors.length);
+    const errorsStr = shownErrors.join("\n· ") + (remainder ? `\n· 외 ${remainder}개` : "");
+    novelMessage(`[기획 차단됨] 검증 실패:\n· ${errorsStr}`, "error");
 }
 
 function showNoProjectDetails() {
@@ -153,6 +164,11 @@ async function loadActiveProjectDetails(setActive = true) {
             activeNovelJobId = job.job_id;
             renderNovelJob(job);
             scheduleNovelPoll();
+        } else if (config.planning_status === "planning_blocked") {
+            // A foundation-stage failure can legitimately have zero chapters.
+            // Handle the blocked state before comparing 0 completed / 0 total,
+            // otherwise the UI falsely treats it as a finished novel.
+            showPlanningBlockedControls(config);
         } else if ((config.chapters || []).some(chapter => chapter.write_status === "needs_review")) {
             novelEl("btn-novel-retry-review").style.display = "inline-flex";
             novelEl("btn-novel-continue-review").style.display = "inline-flex";
@@ -171,16 +187,25 @@ async function loadActiveProjectDetails(setActive = true) {
             } else {
                 novelEl("btn-novel-write-next").style.display = "none";
                 novelEl("btn-novel-write-all").style.display = "none";
-                novelEl("btn-novel-replan").style.display = "inline-flex";
-                novelEl("novel-progress-container").style.display = "block";
-                const allErrors = config.planning_errors || [];
-                const shownErrors = allErrors.slice(0, 6);
-                const remainder = Math.max(0, allErrors.length - shownErrors.length);
-                const errorsStr = shownErrors.join("\n· ") + (remainder ? `\n· 외 ${remainder}개` : "");
-                novelMessage(`[기획 차단됨] 검증 실패:\n· ${errorsStr}`, "error");
+                
+                if (config.planning_status === "continuity_blocked") {
+                    novelMessage(`[연속성 차단됨] 검증 실패: 직전 검토 필요 화차와 서사 연속성 충돌이 감지되었습니다. 이전 원고를 수정하고 다시 시작해 주십시오.`, "error");
+                } else if (config.planning_status === "integrity_failed") {
+                    novelMessage(`[완결성 검증 실패] 최종 원고 병합 및 품질 검증 과정에서 결격 사유가 감지되었습니다.`, "error");
+                } else if (config.planning_status === "project_identity_failed") {
+                    novelMessage(`[정체성 검증 실패] 프로젝트 제목, 파일명, project_id 간 불일치가 감지되었습니다.`, "error");
+                } else {
+                    showPlanningBlockedControls(config);
+                }
             }
         } else {
-            novelMessage("모든 화의 집필이 완료되었습니다.", "success");
+            if ((config.chapters || []).some(chapter => chapter.write_status === "needs_review")) {
+                novelEl("btn-novel-retry-review").style.display = "inline-flex";
+                novelEl("btn-novel-continue-review").style.display = "inline-flex";
+                novelMessage("집필이 완료되었으나 검토 필요 회차가 존재합니다 (generated_with_review).", "warning");
+            } else {
+                novelMessage("모든 화의 집필이 완료되었습니다.", "success");
+            }
         }
     } catch (error) {
         novelMessage(`프로젝트 오류: ${error.message}`, "error");
@@ -305,7 +330,7 @@ async function pollNovelJob() {
     try {
         const job = await novelRequest(`/api/novel/job?job_id=${encodeURIComponent(activeNovelJobId)}`);
         renderNovelJob(job);
-        const terminal = ["completed", "completed_with_review", "cancelled", "planning_blocked", "pilot_rejected", "failed", "project_ready"].includes(job.status);
+        const terminal = ["completed", "completed_with_review", "cancelled", "planning_blocked", "pilot_rejected", "failed", "project_ready", "generated_with_review", "continuity_blocked", "integrity_failed", "project_identity_failed"].includes(job.status);
         if (terminal) {
             activeNovelJobId = "";
             clearTimeout(novelPollTimer);
@@ -318,15 +343,20 @@ async function pollNovelJob() {
                 });
                 await loadNovelProjects();
             }
-            if (["planning_blocked", "pilot_rejected", "failed"].includes(job.status)) {
+            if (["planning_blocked", "pilot_rejected", "failed", "continuity_blocked", "integrity_failed", "project_identity_failed"].includes(job.status)) {
                 const errors = job.result?.errors || [];
                 const shown = errors.slice(0, 6);
                 const remainder = Math.max(0, errors.length - shown.length);
                 const detail = shown.length ? `\n· ${shown.join("\n· ")}${remainder ? `\n· 외 ${remainder}개` : ""}` : "";
-                novelMessage(`${job.status === "planning_blocked" ? "기획 검증 실패" : "작업 실패"}${detail}`, "error");
+                let title = "작업 실패";
+                if (job.status === "planning_blocked") title = "기획 검증 실패";
+                if (job.status === "continuity_blocked") title = "연속성 검증 실패";
+                if (job.status === "integrity_failed") title = "합본 검증 실패";
+                if (job.status === "project_identity_failed") title = "정체성 검증 실패";
+                novelMessage(`${title}${detail}`, "error");
             } else if (job.status === "project_ready") {
                 novelMessage("새 소설 기획 완료 · 소설 목록에 추가되었습니다.", "success");
-            } else if (["completed", "completed_with_review"].includes(job.status)) {
+            } else if (["completed", "completed_with_review", "generated_with_review"].includes(job.status)) {
                 novelMessage("집필 작업이 완료되었습니다.", "success");
             }
             return;
@@ -356,12 +386,14 @@ function renderNovelJob(job) {
         cancel_requested: "취소 요청 처리 중", cancelled: "취소됨", interrupted: "작업 중단됨",
         completed: "완료", completed_with_review: "완료 · 검토 항목 있음",
         event_graph_audit: "사건 기획 검증 중", pilot_writing: "3화 시험 집필 중", pilot_audit: "시험 검토 중",
-        planning_blocked: "기획 차단됨", pilot_rejected: "Pilot 검증 실패", project_ready: "1차 기획 완료", failed: "작업 실패"
+        planning_blocked: "기획 차단됨", pilot_rejected: "Pilot 검증 실패", project_ready: "1차 기획 완료", failed: "작업 실패",
+        generated_with_review: "집필 완료 (검토 필요 있음)", continuity_blocked: "연속성 차단됨",
+        integrity_failed: "완결성 검증 실패", project_identity_failed: "정체성 검증 실패"
     };
-    const successState = ["project_ready", "completed", "completed_with_review"].includes(job.status);
+    const successState = ["project_ready", "completed", "completed_with_review", "generated_with_review"].includes(job.status);
     novelMessage(
         statusNames[job.status] || job.status,
-        (job.status === "interrupted" || job.status === "failed" || job.status === "planning_blocked" || job.status === "pilot_rejected")
+        (job.status === "interrupted" || job.status === "failed" || job.status === "planning_blocked" || job.status === "pilot_rejected" || job.status === "continuity_blocked" || job.status === "integrity_failed" || job.status === "project_identity_failed")
             ? "error"
             : (successState ? "success" : "info")
     );
@@ -377,10 +409,10 @@ function renderNovelJob(job) {
         novelEl("btn-outline-approve").style.display = "inline-flex";
         novelEl("btn-outline-reject").style.display = "inline-flex";
         showOutlineApprovalModal();
-    } else if (["completed", "completed_with_review", "cancelled", "failed", "planning_blocked", "pilot_rejected", "project_ready"].includes(job.status)) {
+    } else if (["completed", "completed_with_review", "cancelled", "failed", "planning_blocked", "pilot_rejected", "project_ready", "generated_with_review", "continuity_blocked", "integrity_failed", "project_identity_failed"].includes(job.status)) {
         activeNovelJobId = "";
         clearTimeout(novelPollTimer);
-        if (job.status === "completed" || job.status === "completed_with_review") {
+        if (job.status === "completed" || job.status === "completed_with_review" || job.status === "generated_with_review") {
             setTimeout(async () => {
                 try {
                     const config = await novelRequest(`/api/novel/status?project_id=${encodeURIComponent(currentNovelProjectId)}`);
