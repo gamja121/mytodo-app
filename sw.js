@@ -1,12 +1,10 @@
-const CACHE_NAME = 'ag-pwa-cache-v17-replan-zero-chapters';
+const CACHE_NAME = 'ag-pwa-cache-no-novel-v1';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
     './sw.js',
     './fresh.html',
     './manifest.json',
-    './novel.js',
-    './novel.css'
 ];
 
 self.addEventListener('install', event => {
