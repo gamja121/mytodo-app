@@ -1,7 +1,8 @@
 ﻿{
-    "name":  "Antigravity Briefing",
-    "short_name":  "Antigravity",
-    "start_url":  "./index.html",
+    "id":  "./",
+    "name":  "오늘할일",
+    "short_name":  "오늘할일",
+    "start_url":  "./",
     "display":  "standalone",
     "background_color":  "#e6e6fa",
     "theme_color":  "#7b68ee",
