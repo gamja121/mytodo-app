@@ -1,4 +1,5 @@
-const CACHE_NAME = 'ag-pwa-cache-canonical-launch-v2';
+const CACHE_NAME = 'ag-pwa-cache-offline-schedule-v4';
+const TODO_CACHE_KEY = '/__offline_todo_snapshot__.json';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
@@ -32,8 +33,28 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
     
-    // API 요청 및 todo.json은 네트워크에서만 즉시 로드 (캐시 우회)
-    if (url.pathname.startsWith('/api/') || url.pathname.endsWith('todo.json')) {
+    // todo.json은 네트워크 우선이며, 성공 응답을 고정 키로 보관해
+    // 쿼리 문자열이 달라져도 오프라인에서 마지막 정상본을 반환한다.
+    if (url.pathname.endsWith('todo.json')) {
+        event.respondWith(
+            fetch(event.request, { cache: 'no-store' })
+                .then(response => {
+                    if (response && response.status === 200) {
+                        const copy = response.clone();
+                        caches.open(CACHE_NAME).then(cache => cache.put(TODO_CACHE_KEY, copy));
+                    }
+                    return response;
+                })
+                .catch(async () => {
+                    const cached = await caches.match(TODO_CACHE_KEY);
+                    return cached || new Response('Offline', { status: 503, statusText: 'Offline' });
+                })
+        );
+        return;
+    }
+
+    // 나머지 API 요청은 서버가 필요하므로 네트워크 전용이다.
+    if (url.pathname.startsWith('/api/')) {
         event.respondWith(fetch(event.request, { cache: 'no-store' }).catch(() => {
             return new Response('Offline', { status: 503, statusText: 'Offline' });
         }));

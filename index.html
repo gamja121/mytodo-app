@@ -130,6 +130,26 @@
             transform: translateY(-2px);
         }
 
+        /* Evidence Badges & Source Drawer */
+        .evidence-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px;
+        }
+        .badge-direct { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-partial { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .badge-web { background: rgba(59, 130, 246, 0.2); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.4); }
+        .badge-blocked { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .source-btn {
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted); border-radius: 8px; padding: 4px 10px; font-size: 0.75rem; cursor: pointer; margin-top: 8px;
+        }
+        .source-drawer {
+            margin-top: 8px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; font-size: 0.75rem; color: var(--text-muted);
+        }
+        .clarification-choices { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+        .choice-btn {
+            background: var(--violet-pop); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; cursor: pointer; text-align: left;
+        }
+
         /* Custom Checkbox */
         .checkbox-wrapper {
             display: flex; align-items: center; flex-grow: 1; cursor: pointer;
@@ -424,16 +444,20 @@
         let activeTab = 'schedule';
         let apiSessionToken = sessionStorage.getItem(SESSION_TOKEN_KEY) || '';
         let offlineMode = false;
-        const APP_BUILD_ID = '20260803-canonical-launch-v2';
+        const APP_BUILD_ID = '20260811-offline-schedule-v4';
+        const SCHEDULE_CACHE_KEY = 'ag_schedule_cache_v2';
+        const SCHEDULE_CACHE_VERSION = 2;
         const API_BASE = 'https://gulf-brick-sulfide.ngrok-free.dev';
         function apiUrl(path) { return API_BASE + path; }
 
         async function repairPwaCache() {
             try {
-                if ('caches' in window) {
+                const previousBuild = localStorage.getItem('ag_pwa_build_id');
+                if (previousBuild && previousBuild !== APP_BUILD_ID && 'caches' in window) {
                     const keys = await caches.keys();
                     await Promise.all(keys.map(key => caches.delete(key)));
                 }
+                localStorage.setItem('ag_pwa_build_id', APP_BUILD_ID);
                 if ('serviceWorker' in navigator) {
                     const registrations = await navigator.serviceWorker.getRegistrations();
                     await Promise.all(registrations.map(reg => reg.update().catch(() => null)));
@@ -441,6 +465,52 @@
             } catch (e) {
                 console.log('PWA cache repair skipped', e);
             }
+        }
+
+        function isSchedulePayload(value) {
+            return value && typeof value === 'object' && !Array.isArray(value) &&
+                Object.keys(value).some(key => /^\d{4}-\d{2}-\d{2}$/.test(key));
+        }
+
+        function saveScheduleCache(schedule) {
+            if (!isSchedulePayload(schedule)) return false;
+            localStorage.setItem(SCHEDULE_CACHE_KEY, JSON.stringify({
+                version: SCHEDULE_CACHE_VERSION,
+                savedAt: new Date().toISOString(),
+                schedule: schedule
+            }));
+            // 구버전 앱과의 호환을 위해 기존 키도 함께 갱신한다.
+            localStorage.setItem('ag_7day_data', JSON.stringify(schedule));
+            return true;
+        }
+
+        function loadScheduleCache() {
+            try {
+                const current = JSON.parse(localStorage.getItem(SCHEDULE_CACHE_KEY) || 'null');
+                if (current && current.version === SCHEDULE_CACHE_VERSION && isSchedulePayload(current.schedule)) {
+                    return current;
+                }
+            } catch (e) {
+                console.log('Current schedule cache is invalid.', e);
+            }
+            try {
+                const legacy = JSON.parse(localStorage.getItem('ag_7day_data') || 'null');
+                if (isSchedulePayload(legacy)) {
+                    const migrated = { version: SCHEDULE_CACHE_VERSION, savedAt: null, schedule: legacy };
+                    localStorage.setItem(SCHEDULE_CACHE_KEY, JSON.stringify(migrated));
+                    return migrated;
+                }
+            } catch (e) {
+                console.log('Legacy schedule cache is invalid.', e);
+            }
+            return null;
+        }
+
+        function scheduleCoverage(schedule) {
+            if (!isSchedulePayload(schedule)) return '';
+            const dates = Object.keys(schedule).filter(key => /^\d{4}-\d{2}-\d{2}$/.test(key)).sort();
+            if (!dates.length) return '';
+            return `${dates[0]} ~ ${dates[dates.length - 1]}`;
         }
 
         function authHeaders(extraHeaders = {}) {
@@ -484,7 +554,7 @@
         async function handle403() {
             sessionStorage.removeItem(SESSION_TOKEN_KEY);
             apiSessionToken = '';
-            
+
             const pw = prompt("로그인 세션이 만료되었습니다. 다시 비밀번호를 입력해주세요.");
             if (pw) {
                 const status = await loginWithPassword(pw);
@@ -586,13 +656,19 @@
             let currentOnline = false;
             try {
                 const res = await fetch(apiUrl('/todo.json?t=' + Date.now()), {
+                    cache: 'no-store',
                     headers: authHeaders()
                 });
                 if (res.status === 200) {
-                    sevenDaysData = await res.json();
-                    localStorage.setItem('ag_7day_data', JSON.stringify(sevenDaysData));
-                    offlineMode = false;
-                    currentOnline = true;
+                    const fetchedData = await res.json();
+                    if (saveScheduleCache(fetchedData)) {
+                        sevenDaysData = fetchedData;
+                        offlineMode = false;
+                        currentOnline = true;
+                    } else {
+                        console.log('Invalid schedule response; keeping the last good cache.');
+                        offlineMode = true;
+                    }
                 } else if (res.status === 403) {
                     const success = await handle403();
                     if (success) {
@@ -607,8 +683,8 @@
             }
             
             if(!sevenDaysData) {
-                const cached = localStorage.getItem('ag_7day_data');
-                if(cached) sevenDaysData = JSON.parse(cached);
+                const cached = loadScheduleCache();
+                if(cached) sevenDaysData = cached.schedule;
             }
             
             try {
@@ -621,11 +697,12 @@
                         document.getElementById('date-display').innerText = latestData.date;
                         
                         if (offlineMode) {
+                            const coverage = scheduleCoverage(sevenDaysData);
                             document.getElementById('briefing-display').innerHTML = `
                                 <div style="color:#ffb74d; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
                                     <span>⚠️ 오프라인 모드입니다. 마지막으로 저장된 할 일을 보여줍니다.</span>
                                 </div>
-                                <div style="color:var(--text-muted); font-size:0.9em; margin-bottom:12px;">PC가 켜지면 변경사항이 자동 동기화됩니다.</div>
+                                <div style="color:var(--text-muted); font-size:0.9em; margin-bottom:12px;">휴대폰 저장 범위: ${coverage || '확인 불가'}<br>PC가 켜지면 변경사항이 자동 동기화됩니다.</div>
                                 ${latestData.briefing}
                             `;
                         } else {
@@ -676,7 +753,8 @@
                             });
                         }
                     } else {
-                        document.getElementById('briefing-display').innerText = "오늘 날짜의 브리핑 데이터가 없습니다. PC를 한 번 켜서 데이터를 갱신해주세요!";
+                        const coverage = scheduleCoverage(sevenDaysData);
+                        document.getElementById('briefing-display').innerText = `오늘 일정이 휴대폰 저장 범위에 없습니다. 저장 범위: ${coverage || '확인 불가'}. PC와 연결될 때 다음 60일 일정이 자동 저장됩니다.`;
                     }
                 } else {
                     document.getElementById('briefing-display').innerText = "저장된 할 일 데이터가 없습니다. PC가 켜진 상태에서 한 번 앱을 열어 데이터를 받아와야 오프라인 사용이 가능합니다.";
@@ -744,7 +822,7 @@
             const container = document.getElementById('chat-messages');
             container.innerHTML = '';
             history.forEach(msg => {
-                renderChatBubble(msg.role, msg.content);
+                renderChatBubble(msg.role, msg.content, msg.data || null);
             });
             
             // Append a hidden typing indicator
@@ -760,11 +838,11 @@
             scrollToBottom();
         }
 
-        function appendChatBubble(role, content) {
+        function appendChatBubble(role, content, data = null) {
             const history = JSON.parse(localStorage.getItem('ag_chat_history') || '[]');
-            history.push({role: role, content: content});
+            history.push({role: role, content: content, data: data});
             localStorage.setItem('ag_chat_history', JSON.stringify(history));
-            renderChatBubble(role, content);
+            renderChatBubble(role, content, data);
             scrollToBottom();
         }
 
@@ -784,11 +862,91 @@
             loadChatFromLocal();
         }
 
-        function renderChatBubble(role, content) {
+        function escapeHtml(text) {
+            return (text || '').toString()
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function toggleSources(drawerId) {
+            const el = document.getElementById(drawerId);
+            if (el) {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function renderChatBubble(role, content, data = null) {
             const container = document.getElementById('chat-messages');
             const bubble = document.createElement('div');
             bubble.className = `chat-bubble ${role}`;
-            bubble.innerText = content;
+
+            let html = '';
+            let choicesElement = null;
+
+            if (role === 'ai' && data) {
+                const isValidDirect = data.evidence_status === 'direct' &&
+                                      data.response_id &&
+                                      data.sources &&
+                                      data.sources.length > 0 &&
+                                      data.sources.every(s => s.chunk_id && s.line_start);
+
+                if (isValidDirect) {
+                    html += `<div class="evidence-badge badge-direct">직접 근거 확인</div>`;
+                } else if (data.evidence_status === 'partial') {
+                    html += `<div class="evidence-badge badge-partial">부분 근거</div>`;
+                } else if (data.evidence_status === 'web') {
+                    html += `<div class="evidence-badge badge-web">외부 웹 근거</div>`;
+                } else if (data.status === 'blocked' || data.status === 'no_evidence' || data.status === 'claim_verification_failed') {
+                    html += `<div class="evidence-badge badge-blocked">답변 보류</div>`;
+                }
+
+                const rawText = typeof content === 'string' ? content : JSON.stringify(content);
+                html += `<div>${escapeHtml(rawText).replace(/\n/g, '<br>')}</div>`;
+
+                if (data.clarification && data.clarification.options && data.clarification.options.length > 0) {
+                    choicesElement = document.createElement('div');
+                    choicesElement.className = 'clarification-choices';
+                    const markers = ['①', '②', '③'];
+                    data.clarification.options.forEach((opt, idx) => {
+                        const btn = document.createElement('button');
+                        btn.className = 'choice-btn';
+                        const labelText = typeof opt === 'object' ? (opt.label || opt.option_id) : opt;
+                        const marker = markers[idx] || (idx + 1) + '.';
+                        btn.innerText = `${marker} ${labelText}`;
+                        btn.addEventListener('click', () => {
+                            choicesElement.querySelectorAll('button').forEach(button => button.disabled = true);
+                            sendChatMessage(
+                                labelText,
+                                data.clarification.clarification_id,
+                                typeof opt === 'object' ? opt.option_id : null
+                            );
+                        });
+                        choicesElement.appendChild(btn);
+                    });
+                }
+
+                if (data.sources && data.sources.length > 0) {
+                    const drawerId = 'sources-' + Math.random().toString(36).substr(2, 9);
+                    html += `<button class="source-btn" onclick="toggleSources('${drawerId}')">🔍 근거 보기 (${data.sources.length}개)</button>`;
+                    html += `<div id="${drawerId}" class="source-drawer" style="display:none;">`;
+                    data.sources.forEach(s => {
+                        const pageText = s.page_start ? `${s.page_start}페이지` : '페이지 정보 없음';
+                        html += `<div>• ${escapeHtml(s.source_label)}, ${pageText}, ${s.line_start}~${s.line_end}줄</div>`;
+                    });
+                    html += `</div>`;
+                }
+            } else {
+                const rawText = typeof content === 'string' ? content : JSON.stringify(content);
+                html = escapeHtml(rawText).replace(/\n/g, '<br>');
+            }
+
+            bubble.innerHTML = html;
+            if (choicesElement) {
+                bubble.appendChild(choicesElement);
+            }
             
             const indicator = document.getElementById('typing-indicator');
             if (indicator) {
@@ -826,7 +984,7 @@
             if (ruleCheckbox) ruleCheckbox.checked = false;
         }
 
-        async function sendChatMessage(savedText = null) {
+        async function sendChatMessage(savedText = null, clarificationId = null, selectedOptionId = null) {
             const input = document.getElementById('new-task-input');
             let text = savedText || input.value.trim();
             if(!text) return;
@@ -849,17 +1007,22 @@
                 const response = await fetch(apiUrl('/api/chat'), {
                     method: 'POST',
                     headers: authHeaders({ 'Content-Type': 'application/json' }),
-                    body: JSON.stringify({ message: payloadText, allow_web_search: allowWebSearch })
+                    body: JSON.stringify({
+                        message: payloadText,
+                        allow_web_search: allowWebSearch,
+                        clarification_id: clarificationId,
+                        selected_option_id: selectedOptionId
+                    })
                 });
                 
                 if (response.status === 200) {
                     const data = await response.json();
                     document.getElementById('typing-indicator').style.display = 'none';
-                    appendChatBubble("ai", data.reply);
+                    appendChatBubble("ai", data.reply, data);
                 } else if (response.status === 403) {
                     const success = await handle403();
                     if (success) {
-                        return sendChatMessage(payloadText);
+                        return sendChatMessage(payloadText, clarificationId, selectedOptionId);
                     }
                 } else {
                     const errorText = await response.text();
@@ -996,4 +1159,3 @@
     </script>
 </body>
 </html>
-
